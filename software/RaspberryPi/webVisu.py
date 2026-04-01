@@ -2,7 +2,8 @@ import json
 import time
 import threading
 import subprocess
-from flask import Flask, jsonify, render_template, redirect
+import requests
+from flask import Flask, jsonify, render_template, Response, stream_with_context
 import paho.mqtt.client as mqtt
 
 MQTT_BROKER = "localhost"
@@ -89,7 +90,14 @@ def api_position():
 
 @app.route("/camera_feed")
 def camera_feed():
-    return redirect(CAMERA_STREAM_URL, code=302)
+    upstream = requests.get(CAMERA_STREAM_URL, stream=True, timeout=10)
+    return Response(
+        stream_with_context(upstream.iter_content(chunk_size=1024)),
+        content_type=upstream.headers.get(
+            "Content-Type",
+            "multipart/x-mixed-replace; boundary=frame"
+        )
+    )
 
 @app.route("/status")
 def service_status():

@@ -47,10 +47,11 @@ fi
 
 cd "${LIVE_DIR}"
 
+rm -rf .venv
 python3 -m venv --system-site-packages .venv
 . .venv/bin/activate
 pip install --upgrade pip
-pip install flask paho-mqtt pyserial
+pip install flask paho-mqtt pyserial requests
 
 sudo tee "${WEB_SERVICE_FILE}" > /dev/null <<EOF
 [Unit]
