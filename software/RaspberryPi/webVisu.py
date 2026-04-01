@@ -4,10 +4,12 @@
 # json        -> built into Python, no pip install needed
 # threading   -> built into Python, no pip install needed
 # time        -> built into Python, no pip install needed
+# subprocess  -> built into Python, no pip install needed
 
 import json
 import time
 import threading
+import subprocess
 from flask import Flask, jsonify, render_template
 import paho.mqtt.client as mqtt
 
@@ -68,14 +70,6 @@ def api_position():
     with data_lock:
         return jsonify(latest_position)
 
-if __name__ == "__main__":
-    app.run(host=WEB_HOST, port=WEB_PORT, debug=False)
-
-
-
-
-import subprocess
-
 @app.route("/status")
 def service_status():
     services = [
@@ -98,3 +92,6 @@ def service_status():
         data.append({"name": svc, "status": active})
 
     return render_template("status.html", services=data)
+
+if __name__ == "__main__":
+    app.run(host=WEB_HOST, port=WEB_PORT, debug=False)
