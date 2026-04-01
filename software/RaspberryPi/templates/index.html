@@ -10,8 +10,70 @@
             background: #111827;
             color: #f9fafb;
             margin: 0;
-            padding: 2rem;
+            padding: 0;
         }
+
+        .topbar {
+            background: #0f172a;
+            border-bottom: 1px solid #374151;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .topbar-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 1rem 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .brand {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #f9fafb;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: #1f2937;
+            color: #f9fafb;
+            border: 1px solid #374151;
+            border-radius: 8px;
+            padding: 0.5rem 0.75rem;
+            cursor: pointer;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .nav-link {
+            color: #cbd5e1;
+            text-decoration: none;
+            padding: 0.45rem 0.8rem;
+            border-radius: 8px;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .nav-link:hover {
+            background: #1f2937;
+            color: #ffffff;
+        }
+
+        .nav-link.active {
+            background: #2563eb;
+            color: #ffffff;
+        }
+
+        .page-wrap {
+            padding: 2rem 1rem;
+        }
+
         .card {
             max-width: 520px;
             margin: 2rem auto;
@@ -20,41 +82,94 @@
             padding: 1.5rem;
             box-shadow: 0 10px 30px rgba(0,0,0,0.35);
         }
+
         h1 {
             margin-top: 0;
             font-size: 1.8rem;
         }
+
         .row {
             margin: 0.75rem 0;
             font-size: 1.1rem;
         }
+
         .label {
             color: #9ca3af;
             display: inline-block;
             width: 120px;
         }
+
         .value {
             color: #34d399;
             font-weight: bold;
         }
+
         .muted {
             color: #9ca3af;
             font-size: 0.95rem;
             margin-top: 1rem;
         }
+
+        @media (max-width: 700px) {
+            .menu-toggle {
+                display: inline-block;
+            }
+
+            .topbar-inner {
+                flex-wrap: wrap;
+            }
+
+            .nav-links {
+                width: 100%;
+                display: none;
+                flex-direction: column;
+                padding-top: 0.5rem;
+            }
+
+            .nav-links.open {
+                display: flex;
+            }
+
+            .nav-link {
+                width: 100%;
+                box-sizing: border-box;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h1>Live Position</h1>
-        <div class="row"><span class="label">X:</span> <span class="value" id="x">-</span></div>
-        <div class="row"><span class="label">Y:</span> <span class="value" id="y">-</span></div>
-        <div class="row"><span class="label">Device ts:</span> <span class="value" id="ts">-</span></div>
-        <div class="row"><span class="label">Received:</span> <span class="value" id="received_at">-</span></div>
-        <div class="muted">Auto-refreshing every 200 ms</div>
+    <div class="topbar">
+        <div class="topbar-inner">
+            <div class="brand">Mini Smart Bus</div>
+
+            <button class="menu-toggle" type="button" onclick="toggleMenu()">
+                Menu
+            </button>
+
+            <nav id="main-nav" class="nav-links">
+                <a href="/" class="nav-link active">Live Position</a>
+                <a href="/status" class="nav-link">Service Status</a>
+            </nav>
+        </div>
+    </div>
+
+    <div class="page-wrap">
+        <div class="card">
+            <h1>Live Position</h1>
+            <div class="row"><span class="label">X:</span> <span class="value" id="x">-</span></div>
+            <div class="row"><span class="label">Y:</span> <span class="value" id="y">-</span></div>
+            <div class="row"><span class="label">Device ts:</span> <span class="value" id="ts">-</span></div>
+            <div class="row"><span class="label">Received:</span> <span class="value" id="received_at">-</span></div>
+            <div class="muted">Auto-refreshing every 200 ms</div>
+        </div>
     </div>
 
     <script>
+        function toggleMenu() {
+            const nav = document.getElementById('main-nav');
+            nav.classList.toggle('open');
+        }
+
         async function refreshData() {
             try {
                 const response = await fetch('/api/position');
