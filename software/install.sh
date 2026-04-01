@@ -2,23 +2,33 @@
 set -e
 
 APP_NAME="web-visu"
-INSTALL_DIR="/opt/${APP_NAME}"
-SERVICE_FILE="/etc/systemd/system/${APP_NAME}.service"
 CURRENT_USER="${SUDO_USER:-$USER}"
+BASE_DIR="/home/${CURRENT_USER}"
+LIVE_DIR="${BASE_DIR}/MiniSmartBus-live"
+SERVICE_FILE="/etc/systemd/system/${APP_NAME}.service"
 
-echo "Installing ${APP_NAME}..."
+echo "Installing ${APP_NAME} into stable git directory..."
+echo "User: ${CURRENT_USER}"
+echo "Live directory: ${LIVE_DIR}"
 
 sudo apt update
-sudo apt install -y python3 python3-venv python3-pip mosquitto mosquitto-clients
+sudo apt install -y python3 python3-venv python3-pip git mosquitto mosquitto-clients
 
 sudo systemctl enable mosquitto
 sudo systemctl start mosquitto
 
-sudo mkdir -p "${INSTALL_DIR}"
-sudo cp -r . "${INSTALL_DIR}"
-sudo chown -R "${CURRENT_USER}:${CURRENT_USER}" "${INSTALL_DIR}"
+mkdir -p "${LIVE_DIR}"
 
-cd "${INSTALL_DIR}"
+if [ ! -d "${LIVE_DIR}/.git" ]; then
+    echo "Initializing stable git checkout in ${LIVE_DIR}..."
+    git clone https://github.com/AlexanderPetry/MiniSmartBus.git "${LIVE_DIR}"
+else
+    echo "Stable git checkout already exists, pulling latest changes..."
+    git -C "${LIVE_DIR}" pull
+fi
+
+cd "${LIVE_DIR}"
+
 python3 -m venv .venv
 . .venv/bin/activate
 pip install --upgrade pip
@@ -33,8 +43,8 @@ Wants=mosquitto.service
 [Service]
 Type=simple
 User=${CURRENT_USER}
-WorkingDirectory=${INSTALL_DIR}
-ExecStart=${INSTALL_DIR}/.venv/bin/python ${INSTALL_DIR}/RaspberryPi/webVisu.py
+WorkingDirectory=${LIVE_DIR}/software/RaspberryPi
+ExecStart=${LIVE_DIR}/.venv/bin/python ${LIVE_DIR}/software/RaspberryPi/webVisu.py
 Restart=always
 RestartSec=2
 
