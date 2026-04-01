@@ -47,7 +47,7 @@ fi
 
 cd "${LIVE_DIR}"
 
-python3 -m venv .venv
+python3 -m venv --system-site-packages .venv
 . .venv/bin/activate
 pip install --upgrade pip
 pip install flask paho-mqtt pyserial
