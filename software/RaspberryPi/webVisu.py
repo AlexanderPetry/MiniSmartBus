@@ -70,3 +70,32 @@ def api_position():
 
 if __name__ == "__main__":
     app.run(host=WEB_HOST, port=WEB_PORT, debug=False)
+
+
+
+
+import subprocess
+
+@app.route("/status")
+def service_status():
+    services = [
+        "position-web.service",
+        "minibus.service",
+    ]
+
+    data = []
+    for svc in services:
+        try:
+            result = subprocess.run(
+                ["systemctl", "is-active", svc],
+                capture_output=True,
+                text=True,
+                check=False
+            )
+            active = result.stdout.strip()
+        except Exception:
+            active = "unknown"
+
+        data.append({"name": svc, "status": active})
+
+    return render_template("status.html", services=data)
