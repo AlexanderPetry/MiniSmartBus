@@ -2,7 +2,7 @@ import json
 import time
 import threading
 import subprocess
-from flask import Flask, jsonify, render_template
+from flask import Flask, jsonify, render_template, redirect
 import paho.mqtt.client as mqtt
 
 MQTT_BROKER = "localhost"
@@ -11,6 +11,8 @@ MQTT_TOPIC = "sensors/position"
 
 WEB_HOST = "0.0.0.0"
 WEB_PORT = 5000
+
+CAMERA_STREAM_URL = "http://127.0.0.1:5001/video_feed"
 
 STALE_AFTER_SECONDS = 3.0
 
@@ -84,6 +86,10 @@ def api_position():
         data["message"] = "Live position data received."
 
     return jsonify(data)
+
+@app.route("/camera_feed")
+def camera_feed():
+    return redirect(CAMERA_STREAM_URL, code=302)
 
 @app.route("/status")
 def service_status():
