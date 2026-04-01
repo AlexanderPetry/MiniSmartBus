@@ -70,7 +70,7 @@ Wants=mosquitto.service
 Type=simple
 User=${CURRENT_USER}
 WorkingDirectory=${LIVE_DIR}/software/RaspberryPi
-ExecStart=${LIVE_DIR}/.venv/bin/python ${LIVE_DIR}/software/RaspberryPi/uwbSerialToMqtt.py
+ExecStart=${LIVE_DIR}/.venv/bin/python ${LIVE_DIR}/software/RaspberryPi/DMW1001_PositionExtracter.py
 Restart=always
 RestartSec=2
 
