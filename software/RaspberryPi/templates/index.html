@@ -154,14 +154,15 @@
     </div>
 
     <div class="page-wrap">
-        <div class="card">
+        <<div class="card">
             <h1>Live Position</h1>
+            <div id="status-banner" class="muted">Waiting for data...</div>
             <div class="row"><span class="label">X:</span> <span class="value" id="x">-</span></div>
             <div class="row"><span class="label">Y:</span> <span class="value" id="y">-</span></div>
             <div class="row"><span class="label">Device ts:</span> <span class="value" id="ts">-</span></div>
             <div class="row"><span class="label">Received:</span> <span class="value" id="received_at">-</span></div>
-            <div class="muted">Auto-refreshing every 200 ms</div>
-        </div>
+        <div class="muted">Auto-refreshing every 200 ms</div>
+    </div>
     </div>
 
     <script>
@@ -175,12 +176,26 @@
                 const response = await fetch('/api/position');
                 const data = await response.json();
 
+                const banner = document.getElementById('status-banner');
+                banner.textContent = data.message ?? 'Unknown state';
+
+                if (data.state === 'ok') {
+                    banner.style.color = '#34d399';
+                } else if (data.state === 'stale') {
+                    banner.style.color = '#fbbf24';
+                } else {
+                    banner.style.color = '#ef4444';
+                }
+
                 document.getElementById('x').textContent = data.x ?? '-';
                 document.getElementById('y').textContent = data.y ?? '-';
                 document.getElementById('ts').textContent = data.ts ?? '-';
                 document.getElementById('received_at').textContent = data.received_at ?? '-';
             } catch (err) {
                 console.error('Failed to fetch position data:', err);
+                const banner = document.getElementById('status-banner');
+                banner.textContent = 'Failed to fetch data from server.';
+                banner.style.color = '#ef4444';
             }
         }
 

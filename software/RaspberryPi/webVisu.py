@@ -1,11 +1,3 @@
-# Libraries used:
-# flask       -> pip install flask
-# paho-mqtt   -> pip install paho-mqtt
-# json        -> built into Python, no pip install needed
-# threading   -> built into Python, no pip install needed
-# time        -> built into Python, no pip install needed
-# subprocess  -> built into Python, no pip install needed
-
 import json
 import time
 import threading
@@ -20,11 +12,14 @@ MQTT_TOPIC = "sensors/position"
 WEB_HOST = "0.0.0.0"
 WEB_PORT = 5000
 
+STALE_AFTER_SECONDS = 3.0
+
 latest_position = {
     "x": None,
     "y": None,
     "ts": None,
-    "received_at": None
+    "received_at": None,
+    "last_update_unix": None
 }
 data_lock = threading.Lock()
 
@@ -47,11 +42,16 @@ def on_message(client, userdata, msg):
         print("Invalid MQTT payload:", e)
         return
 
+    x = payload.get("x")
+    y = payload.get("y")
+    ts = payload.get("ts")
+
     with data_lock:
-        latest_position["x"] = payload.get("x")
-        latest_position["y"] = payload.get("y")
-        latest_position["ts"] = payload.get("ts")
+        latest_position["x"] = x
+        latest_position["y"] = y
+        latest_position["ts"] = ts
         latest_position["received_at"] = time.strftime("%Y-%m-%d %H:%M:%S")
+        latest_position["last_update_unix"] = time.time()
 
     print("Updated position:", latest_position)
 
@@ -68,7 +68,22 @@ def index():
 @app.route("/api/position")
 def api_position():
     with data_lock:
-        return jsonify(latest_position)
+        data = dict(latest_position)
+
+    now = time.time()
+    last_update = data.get("last_update_unix")
+
+    if last_update is None:
+        data["state"] = "no_data"
+        data["message"] = "No valid position data received yet."
+    elif now - last_update > STALE_AFTER_SECONDS:
+        data["state"] = "stale"
+        data["message"] = "Position data is stale."
+    else:
+        data["state"] = "ok"
+        data["message"] = "Live position data received."
+
+    return jsonify(data)
 
 @app.route("/status")
 def service_status():
@@ -81,7 +96,6 @@ def service_status():
     data = []
     for svc in services:
         try:
-            # Get status
             result = subprocess.run(
                 ["systemctl", "is-active", svc],
                 capture_output=True,
@@ -90,9 +104,8 @@ def service_status():
             )
             active = result.stdout.strip()
 
-            # Try to get error log only if failed
             error_log = ""
-            if active == "failed":
+            if active != "active":
                 log_result = subprocess.run(
                     ["journalctl", "-u", svc, "--no-pager", "-n", "10"],
                     capture_output=True,

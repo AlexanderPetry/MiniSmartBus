@@ -1,9 +1,3 @@
-# Libraries used:
-# pyserial     -> pip install pyserial
-# paho-mqtt   -> pip install paho-mqtt
-# json        -> built into Python, no pip install needed
-# time        -> built into Python, no pip install needed
-
 import json
 import time
 import serial
@@ -28,34 +22,47 @@ time.sleep(1)
 dwm.write(b"lec\r")
 time.sleep(1)
 
+last_any_serial = time.time()
+last_valid_pos = None
+
 try:
     while True:
         raw = dwm.readline()
 
         if not raw:
+            if time.time() - last_any_serial > 5:
+                print("No serial data received for 5 seconds")
+                last_any_serial = time.time()
             continue
+
+        last_any_serial = time.time()
 
         try:
             line = raw.decode("utf-8", errors="ignore").strip()
-        except Exception:
+        except Exception as e:
+            print("Decode failed:", e)
             continue
 
         if not line:
             continue
 
-        print("RAW:", line)
+        print("RAW:", repr(line))
 
         if "POS" not in line:
             continue
 
-        parts = line.split(",")
+        parts = [p.strip() for p in line.split(",")]
+        print("PARTS:", parts)
 
         if "POS" in parts:
             try:
                 pos_index = parts.index("POS")
+                x = float(parts[pos_index + 1])
+                y = float(parts[pos_index + 2])
+
                 pos = {
-                    "x": float(parts[pos_index + 1]),
-                    "y": float(parts[pos_index + 2]),
+                    "x": x,
+                    "y": y,
                     "ts": time.time()
                 }
 
@@ -64,9 +71,11 @@ try:
 
                 result = client.publish(MQTT_TOPIC, payload, qos=0)
                 result.wait_for_publish()
+                last_valid_pos = time.time()
 
             except (ValueError, IndexError) as e:
                 print("Failed to parse POS data:", e)
+                print("Bad line was:", repr(line))
                 continue
 
 except KeyboardInterrupt:
