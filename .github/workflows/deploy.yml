@@ -1,4 +1,4 @@
-name: Pull latest code on Pi
+name: Pull latest code and restart on Pi
 
 on:
   push:
@@ -18,3 +18,11 @@ jobs:
           echo "Repo checked out to: $GITHUB_WORKSPACE"
           pwd
           ls -la
+
+      - name: Make restart.sh executable
+        run: |
+          chmod +x "${{ github.workspace }}/software/restart.sh" || true
+
+      - name: Restart all services
+        run: |
+          sudo "${{ github.workspace }}/software/restart.sh"
