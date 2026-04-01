@@ -1,0 +1,20 @@
+name: Pull latest code on Pi
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  pull:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout latest code
+        uses: actions/checkout@v4
+
+      - name: Show where the repo was checked out
+        run: |
+          echo "Repo checked out to: $GITHUB_WORKSPACE"
+          pwd
+          ls -la
