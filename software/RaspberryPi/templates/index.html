@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Position Data</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #111827;
+            color: #f9fafb;
+            margin: 0;
+            padding: 2rem;
+        }
+        .card {
+            max-width: 520px;
+            margin: 2rem auto;
+            background: #1f2937;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+        }
+        h1 {
+            margin-top: 0;
+            font-size: 1.8rem;
+        }
+        .row {
+            margin: 0.75rem 0;
+            font-size: 1.1rem;
+        }
+        .label {
+            color: #9ca3af;
+            display: inline-block;
+            width: 120px;
+        }
+        .value {
+            color: #34d399;
+            font-weight: bold;
+        }
+        .muted {
+            color: #9ca3af;
+            font-size: 0.95rem;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Live Position</h1>
+        <div class="row"><span class="label">X:</span> <span class="value" id="x">-</span></div>
+        <div class="row"><span class="label">Y:</span> <span class="value" id="y">-</span></div>
+        <div class="row"><span class="label">Device ts:</span> <span class="value" id="ts">-</span></div>
+        <div class="row"><span class="label">Received:</span> <span class="value" id="received_at">-</span></div>
+        <div class="muted">Auto-refreshing every 200 ms</div>
+    </div>
+
+    <script>
+        async function refreshData() {
+            try {
+                const response = await fetch('/api/position');
+                const data = await response.json();
+
+                document.getElementById('x').textContent = data.x ?? '-';
+                document.getElementById('y').textContent = data.y ?? '-';
+                document.getElementById('ts').textContent = data.ts ?? '-';
+                document.getElementById('received_at').textContent = data.received_at ?? '-';
+            } catch (err) {
+                console.error('Failed to fetch position data:', err);
+            }
+        }
+
+        refreshData();
+        setInterval(refreshData, 200);
+    </script>
+</body>
+</html>
