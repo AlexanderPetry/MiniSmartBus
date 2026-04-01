@@ -149,10 +149,17 @@
             flex: 1;
         }
 
+        .camera-card {
+            display: flex;
+            flex-direction: column;
+        }
+
         .camera-box {
             position: relative;
             width: 100%;
-            aspect-ratio: 16 / 9;
+            max-width: 560px;
+            aspect-ratio: 1 / 1;
+            margin: 0 auto;
             background: #0b1220;
             border: 1px solid #374151;
             border-radius: 12px;
@@ -160,12 +167,14 @@
         }
 
         .camera-feed {
+            position: absolute;
+            inset: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
             display: block;
             background: #0b1220;
-            transform: rotate(90deg);
+            object-fit: contain;
+            transform: rotate(90deg) scale(1);
             transform-origin: center center;
         }
 
@@ -179,27 +188,7 @@
             font-size: 1rem;
             text-align: center;
             padding: 1rem;
-        }
-
-        .bbox {
-            position: absolute;
-            border: 2px solid #22c55e;
-            border-radius: 8px;
-            pointer-events: none;
-            box-sizing: border-box;
-        }
-
-        .bbox-label {
-            position: absolute;
-            top: -1.6rem;
-            left: 0;
-            background: #22c55e;
-            color: #06230f;
-            font-size: 0.75rem;
-            font-weight: bold;
-            padding: 0.2rem 0.45rem;
-            border-radius: 6px;
-            white-space: nowrap;
+            background: rgba(11, 18, 32, 0.75);
         }
 
         .object-list {
@@ -264,6 +253,10 @@
             .span-8 {
                 grid-column: span 12;
             }
+
+            .camera-box {
+                max-width: 480px;
+            }
         }
 
         @media (max-width: 700px) {
@@ -303,6 +296,10 @@
             .value,
             .value-neutral {
                 text-align: left;
+            }
+
+            .camera-box {
+                max-width: 100%;
             }
         }
     </style>
@@ -349,12 +346,11 @@
                 <div class="card-subtle">Auto-refreshing every 200 ms</div>
             </div>
 
-            <div class="card span-8">
+            <div class="card span-8 camera-card">
                 <h2>Camera Output</h2>
-                <div class="pill">Template area</div>
+                <div class="pill">Live stream</div>
 
                 <div class="camera-box" id="camera-box">
-                    <!-- Replace this src later with your Flask camera route, e.g. /video_feed -->
                     <img
                         id="camera-feed"
                         class="camera-feed"
@@ -362,13 +358,12 @@
                         alt="Live camera feed"
                     >
                     <div id="camera-placeholder" class="camera-placeholder">
-                        Camera stream placeholder<br>
-                        Set <code>src="/video_feed"</code> when your stream route exists.
+                        Waiting for camera stream...
                     </div>
                 </div>
 
                 <div class="card-subtle">
-                    Use this panel for the live image plus future real bounding-box overlay.
+                    Square camera panel sized for the current rotated feed.
                 </div>
             </div>
 
