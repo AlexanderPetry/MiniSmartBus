@@ -1,21 +1,31 @@
 #!/usr/bin/env bash
 set -e
 
-APP_NAME="web-visu"
-INSTALL_DIR="/opt/${APP_NAME}"
-SERVICE_FILE="/etc/systemd/system/${APP_NAME}.service"
+WEB_APP_NAME="web-visu"
+SERIAL_APP_NAME="uwb-mqtt"
 
-echo "Uninstalling ${APP_NAME}..."
+CURRENT_USER="${SUDO_USER:-$USER}"
+BASE_DIR="/home/${CURRENT_USER}"
+LIVE_DIR="${BASE_DIR}/MiniSmartBus-live"
 
-if systemctl list-unit-files | grep -q "^${APP_NAME}.service"; then
-    sudo systemctl stop "${APP_NAME}.service" || true
-    sudo systemctl disable "${APP_NAME}.service" || true
-fi
+WEB_SERVICE_FILE="/etc/systemd/system/${WEB_APP_NAME}.service"
+SERIAL_SERVICE_FILE="/etc/systemd/system/${SERIAL_APP_NAME}.service"
 
-sudo rm -f "${SERVICE_FILE}"
+echo "Uninstalling services..."
+
+sudo systemctl stop "${WEB_APP_NAME}.service" || true
+sudo systemctl disable "${WEB_APP_NAME}.service" || true
+
+sudo systemctl stop "${SERIAL_APP_NAME}.service" || true
+sudo systemctl disable "${SERIAL_APP_NAME}.service" || true
+
+sudo rm -f "${WEB_SERVICE_FILE}"
+sudo rm -f "${SERIAL_SERVICE_FILE}"
+
 sudo systemctl daemon-reload
 
-sudo rm -rf "${INSTALL_DIR}"
+rm -rf "${LIVE_DIR}"
 
 echo "Uninstall complete."
-echo "Note: Mosquitto was left installed."
+echo "Mosquitto was left installed."
+echo "User group membership was not reverted."
