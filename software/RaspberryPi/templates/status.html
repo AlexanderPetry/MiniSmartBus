@@ -47,6 +47,28 @@
         .status-unknown {
             color: #fbbf24;
         }
+        .expand-btn {
+            background: #2d3748;
+            border: 1px solid #374151;
+            color: #cbd5e1;
+            cursor: pointer;
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+            margin-left: 0.5rem;
+            font-size: 0.875rem;
+        }
+        .expanded-log {
+            white-space: pre-wrap;
+            font-family: monospace;
+            background: #1a1f2d;
+            border: 1px solid #374151;
+            border-radius: 8px;
+            padding: 0.75rem;
+            margin-top: 0.5rem;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -62,7 +84,17 @@
             <tbody>
                 {% for svc in services %}
                     <tr>
-                        <td>{{ svc.name }}</td>
+                        <td>
+                            {{ svc.name }}
+                            {% if svc.error_log %}
+                                <button
+                                    class="expand-btn"
+                                    onclick="toggleExpand('{{ svc.name | replace('.', '__') }}')"
+                                >
+                                    Details
+                                </button>
+                            {% endif %}
+                        </td>
                         <td
                             class="
                                 {% if svc.status == 'active' %}
@@ -75,11 +107,25 @@
                             "
                         >
                             {{ svc.status }}
+                            {% if svc.error_log %}
+                                <div id="log-{{ svc.name | replace('.', '__') }}" class="expanded-log" style="display:none;">
+                                    {{ svc.error_log }}
+                                </div>
+                            {% endif %}
                         </td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
+
+    <script>
+        function toggleExpand(id) {
+            const el = document.getElementById('log-' + id);
+            if (el) {
+                el.style.display = el.style.display === 'none' ? 'block' : 'none';
+            }
+        }
+    </script>
 </body>
 </html>

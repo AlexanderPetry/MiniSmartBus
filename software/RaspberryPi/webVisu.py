@@ -81,6 +81,7 @@ def service_status():
     data = []
     for svc in services:
         try:
+            # Get status
             result = subprocess.run(
                 ["systemctl", "is-active", svc],
                 capture_output=True,
@@ -88,10 +89,26 @@ def service_status():
                 check=False
             )
             active = result.stdout.strip()
-        except Exception:
-            active = "unknown"
 
-        data.append({"name": svc, "status": active})
+            # Try to get error log only if failed
+            error_log = ""
+            if active == "failed":
+                log_result = subprocess.run(
+                    ["journalctl", "-u", svc, "--no-pager", "-n", "10"],
+                    capture_output=True,
+                    text=True,
+                    check=False
+                )
+                error_log = log_result.stdout.strip()
+        except Exception as e:
+            active = "unknown"
+            error_log = f"Error checking service: {e}"
+
+        data.append({
+            "name": svc,
+            "status": active,
+            "error_log": error_log
+        })
 
     return render_template("status.html", services=data)
 
