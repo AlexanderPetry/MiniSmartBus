@@ -79,7 +79,7 @@ import subprocess
 @app.route("/status")
 def service_status():
     services = [
-        "position-web.service",
+        "web-visu.service",
     ]
 
     data = []
