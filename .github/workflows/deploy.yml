@@ -1,4 +1,4 @@
-name: Pull latest code and restart on Pi
+name: Reinstall and restart on Pi
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  pull:
+  reinstall:
     runs-on: self-hosted
 
     steps:
@@ -18,11 +18,22 @@ jobs:
           echo "Repo checked out to: $GITHUB_WORKSPACE"
           pwd
           ls -la
+          ls -la "${{ github.workspace }}/software/RaspberryPi" || true
 
-      - name: Make restart.sh executable
+      - name: Make scripts executable
         run: |
-          chmod +x "${{ github.workspace }}/software/restart.sh" || true
+          chmod +x "${{ github.workspace }}/software/RaspberryPi/install.sh" || true
+          chmod +x "${{ github.workspace }}/software/RaspberryPi/uninstall.sh" || true
+          chmod +x "${{ github.workspace }}/software/RaspberryPi/restart.sh" || true
+
+      - name: Uninstall old services
+        run: |
+          sudo bash "${{ github.workspace }}/software/RaspberryPi/uninstall.sh"
+
+      - name: Install fresh services
+        run: |
+          sudo bash "${{ github.workspace }}/software/RaspberryPi/install.sh"
 
       - name: Restart all services
         run: |
-          sudo "${{ github.workspace }}/software/restart.sh"
+          sudo bash "${{ github.workspace }}/software/RaspberryPi/restart.sh"
