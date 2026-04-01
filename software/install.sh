@@ -8,6 +8,9 @@ CAMERA_APP_NAME="camera-stream"
 CURRENT_USER="${SUDO_USER:-$USER}"
 BASE_DIR="/home/${CURRENT_USER}"
 LIVE_DIR="${BASE_DIR}/MiniSmartBus-live"
+MODEL_DIR="${LIVE_DIR}/software/RaspberryPi/models"
+YOLO_MODEL_FILE="${MODEL_DIR}/yolov8n.pt"
+YOLO_MODEL_URL="https://github.com/ultralytics/assets/releases/download/v8.3.0/yolov8n.pt"
 
 WEB_SERVICE_FILE="/etc/systemd/system/${WEB_APP_NAME}.service"
 SERIAL_SERVICE_FILE="/etc/systemd/system/${SERIAL_APP_NAME}.service"
@@ -26,6 +29,7 @@ sudo apt install -y \
     python3-pip \
     python3-picamera2 \
     git \
+    wget \
     mosquitto \
     mosquitto-clients
 
@@ -51,7 +55,16 @@ rm -rf .venv
 python3 -m venv --system-site-packages .venv
 . .venv/bin/activate
 pip install --upgrade pip
-pip install flask paho-mqtt pyserial requests
+pip install flask paho-mqtt pyserial requests ultralytics opencv-python
+
+mkdir -p "${MODEL_DIR}"
+
+if [ -f "${YOLO_MODEL_FILE}" ]; then
+    echo "YOLO model already exists: ${YOLO_MODEL_FILE}"
+else
+    echo "Downloading YOLO model to ${YOLO_MODEL_FILE} ..."
+    wget -O "${YOLO_MODEL_FILE}" "${YOLO_MODEL_URL}"
+fi
 
 sudo tee "${WEB_SERVICE_FILE}" > /dev/null <<EOF
 [Unit]
