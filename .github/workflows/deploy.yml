@@ -22,18 +22,18 @@ jobs:
 
       - name: Make scripts executable
         run: |
-          chmod +x "${{ github.workspace }}/software/RaspberryPi/install.sh" || true
-          chmod +x "${{ github.workspace }}/software/RaspberryPi/uninstall.sh" || true
-          chmod +x "${{ github.workspace }}/software/RaspberryPi/restart.sh" || true
+          chmod +x "${{ github.workspace }}/software/install.sh" || true
+          chmod +x "${{ github.workspace }}/software/uninstall.sh" || true
+          chmod +x "${{ github.workspace }}/software/restart.sh" || true
 
       - name: Uninstall old services
         run: |
-          sudo bash "${{ github.workspace }}/software/RaspberryPi/uninstall.sh"
+          sudo bash "${{ github.workspace }}/software/uninstall.sh"
 
       - name: Install fresh services
         run: |
-          sudo bash "${{ github.workspace }}/software/RaspberryPi/install.sh"
+          sudo bash "${{ github.workspace }}/software/install.sh"
 
       - name: Restart all services
         run: |
-          sudo bash "${{ github.workspace }}/software/RaspberryPi/restart.sh"
+          sudo bash "${{ github.workspace }}/software/restart.sh"
