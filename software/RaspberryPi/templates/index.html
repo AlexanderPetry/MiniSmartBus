@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Position Data</title>
+    <title>Operator Dashboard</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -22,7 +22,7 @@
         }
 
         .topbar-inner {
-            max-width: 900px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 1rem 1.25rem;
             display: flex;
@@ -71,43 +71,197 @@
         }
 
         .page-wrap {
-            padding: 2rem 1rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.25rem;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1rem;
         }
 
         .card {
-            max-width: 520px;
-            margin: 2rem auto;
             background: #1f2937;
             border-radius: 16px;
-            padding: 1.5rem;
+            padding: 1.25rem;
             box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+            border: 1px solid #374151;
         }
 
-        h1 {
+        .card h2 {
             margin-top: 0;
-            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+        }
+
+        .card-subtle {
+            color: #9ca3af;
+            font-size: 0.95rem;
+            margin-top: 0.5rem;
+        }
+
+        .span-4 { grid-column: span 4; }
+        .span-5 { grid-column: span 5; }
+        .span-6 { grid-column: span 6; }
+        .span-7 { grid-column: span 7; }
+        .span-8 { grid-column: span 8; }
+        .span-12 { grid-column: span 12; }
+
+        .status-banner {
+            color: #9ca3af;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
         }
 
         .row {
             margin: 0.75rem 0;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            border-bottom: 1px solid #374151;
+            padding-bottom: 0.5rem;
+        }
+
+        .row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
         }
 
         .label {
             color: #9ca3af;
-            display: inline-block;
-            width: 120px;
+            min-width: 140px;
         }
 
         .value {
             color: #34d399;
             font-weight: bold;
+            text-align: right;
+            flex: 1;
         }
 
-        .muted {
+        .value-neutral {
+            color: #e5e7eb;
+            font-weight: bold;
+            text-align: right;
+            flex: 1;
+        }
+
+        .camera-box {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #0b1220;
+            border: 1px solid #374151;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .camera-feed {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            background: #0b1220;
+        }
+
+        .camera-placeholder {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6b7280;
+            font-size: 1rem;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .bbox {
+            position: absolute;
+            border: 2px solid #22c55e;
+            border-radius: 8px;
+            pointer-events: none;
+            box-sizing: border-box;
+        }
+
+        .bbox-label {
+            position: absolute;
+            top: -1.6rem;
+            left: 0;
+            background: #22c55e;
+            color: #06230f;
+            font-size: 0.75rem;
+            font-weight: bold;
+            padding: 0.2rem 0.45rem;
+            border-radius: 6px;
+            white-space: nowrap;
+        }
+
+        .object-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .object-item {
+            background: #111827;
+            border: 1px solid #374151;
+            border-radius: 12px;
+            padding: 0.85rem;
+        }
+
+        .object-title {
+            font-weight: bold;
+            color: #f9fafb;
+            margin-bottom: 0.4rem;
+        }
+
+        .object-meta {
             color: #9ca3af;
-            font-size: 0.95rem;
-            margin-top: 1rem;
+            font-size: 0.92rem;
+            line-height: 1.45;
+        }
+
+        .mono-box {
+            background: #0b1220;
+            border: 1px solid #374151;
+            border-radius: 12px;
+            padding: 1rem;
+            min-height: 180px;
+            color: #d1d5db;
+            font-family: monospace;
+            white-space: pre-wrap;
+            overflow-wrap: break-word;
+        }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+        }
+
+        .pill {
+            display: inline-block;
+            padding: 0.3rem 0.6rem;
+            border-radius: 999px;
+            font-size: 0.82rem;
+            font-weight: bold;
+            background: #1e3a8a;
+            color: #dbeafe;
+            margin-bottom: 0.75rem;
+        }
+
+        @media (max-width: 1000px) {
+            .span-4,
+            .span-5,
+            .span-6,
+            .span-7,
+            .span-8 {
+                grid-column: span 12;
+            }
         }
 
         @media (max-width: 700px) {
@@ -134,6 +288,20 @@
                 width: 100%;
                 box-sizing: border-box;
             }
+
+            .two-col {
+                grid-template-columns: 1fr;
+            }
+
+            .row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .value,
+            .value-neutral {
+                text-align: left;
+            }
         }
     </style>
 </head>
@@ -147,22 +315,160 @@
             </button>
 
             <nav id="main-nav" class="nav-links">
-                <a href="/" class="nav-link active">Live Position</a>
-                <a href="/status" class="nav-link">Service Status</a>
+                <a href="/" class="nav-link active">Operator View</a>
+                <a href="/status" class="nav-link">Status & Debug</a>
             </nav>
         </div>
     </div>
 
     <div class="page-wrap">
-        <div class="card">
-            <h1>Live Position</h1>
-            <div id="status-banner" class="muted">Waiting for data...</div>
-            <div class="row"><span class="label">X:</span> <span class="value" id="x">-</span></div>
-            <div class="row"><span class="label">Y:</span> <span class="value" id="y">-</span></div>
-            <div class="row"><span class="label">Device ts:</span> <span class="value" id="ts">-</span></div>
-            <div class="row"><span class="label">Received:</span> <span class="value" id="received_at">-</span></div>
-        <div class="muted">Auto-refreshing every 200 ms</div>
-    </div>
+        <div class="dashboard-grid">
+            <div class="card span-4">
+                <h2>Live Position</h2>
+                <div id="status-banner" class="status-banner">Waiting for data...</div>
+
+                <div class="row">
+                    <span class="label">X</span>
+                    <span class="value" id="x">-</span>
+                </div>
+                <div class="row">
+                    <span class="label">Y</span>
+                    <span class="value" id="y">-</span>
+                </div>
+                <div class="row">
+                    <span class="label">Device ts</span>
+                    <span class="value" id="ts">-</span>
+                </div>
+                <div class="row">
+                    <span class="label">Received</span>
+                    <span class="value" id="received_at">-</span>
+                </div>
+
+                <div class="card-subtle">Auto-refreshing every 200 ms</div>
+            </div>
+
+            <div class="card span-8">
+                <h2>Camera Output</h2>
+                <div class="pill">Template area</div>
+
+                <div class="camera-box" id="camera-box">
+                    <!-- Replace this src later with your Flask camera route, e.g. /video_feed -->
+                    <img
+                        id="camera-feed"
+                        class="camera-feed"
+                        src=""
+                        alt="Live camera feed"
+                    >
+                    <div id="camera-placeholder" class="camera-placeholder">
+                        Camera stream placeholder<br>
+                        Set <code>src="/video_feed"</code> when your stream route exists.
+                    </div>
+
+                    <!-- Example bounding boxes -->
+                    <div class="bbox" style="left: 12%; top: 18%; width: 22%; height: 28%;">
+                        <div class="bbox-label">chair 0.94</div>
+                    </div>
+                    <div class="bbox" style="left: 52%; top: 26%; width: 18%; height: 24%; border-color:#f59e0b;">
+                        <div class="bbox-label" style="background:#f59e0b; color:#1f1300;">person 0.88</div>
+                    </div>
+                </div>
+
+                <div class="card-subtle">
+                    Use this panel for the live image plus future real bounding-box overlay.
+                </div>
+            </div>
+
+            <div class="card span-5">
+                <h2>Recognized Objects</h2>
+                <div class="object-list" id="object-list">
+                    <div class="object-item">
+                        <div class="object-title">chair</div>
+                        <div class="object-meta">
+                            confidence: 0.94<br>
+                            bbox: x=12%, y=18%, w=22%, h=28%
+                        </div>
+                    </div>
+                    <div class="object-item">
+                        <div class="object-title">person</div>
+                        <div class="object-meta">
+                            confidence: 0.88<br>
+                            bbox: x=52%, y=26%, w=18%, h=24%
+                        </div>
+                    </div>
+                    <div class="object-item">
+                        <div class="object-title">No live detections yet</div>
+                        <div class="object-meta">
+                            Replace this list from your backend or JS once object detection data is available.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card span-7">
+                <h2>MPU Output</h2>
+                <div class="two-col">
+                    <div>
+                        <div class="row">
+                            <span class="label">Accel X</span>
+                            <span class="value-neutral" id="mpu-ax">-</span>
+                        </div>
+                        <div class="row">
+                            <span class="label">Accel Y</span>
+                            <span class="value-neutral" id="mpu-ay">-</span>
+                        </div>
+                        <div class="row">
+                            <span class="label">Accel Z</span>
+                            <span class="value-neutral" id="mpu-az">-</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="row">
+                            <span class="label">Gyro X</span>
+                            <span class="value-neutral" id="mpu-gx">-</span>
+                        </div>
+                        <div class="row">
+                            <span class="label">Gyro Y</span>
+                            <span class="value-neutral" id="mpu-gy">-</span>
+                        </div>
+                        <div class="row">
+                            <span class="label">Gyro Z</span>
+                            <span class="value-neutral" id="mpu-gz">-</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-subtle">
+                    Placeholder for IMU / MPU telemetry.
+                </div>
+            </div>
+
+            <div class="card span-6">
+                <h2>ESP Status</h2>
+                <div class="row">
+                    <span class="label">Left motor speed</span>
+                    <span class="value-neutral" id="motor-left">-</span>
+                </div>
+                <div class="row">
+                    <span class="label">Right motor speed</span>
+                    <span class="value-neutral" id="motor-right">-</span>
+                </div>
+                <div class="row">
+                    <span class="label">Turning angle</span>
+                    <span class="value-neutral" id="turn-angle">-</span>
+                </div>
+                <div class="row">
+                    <span class="label">ESP state</span>
+                    <span class="value-neutral" id="esp-state">No data yet</span>
+                </div>
+            </div>
+
+            <div class="card span-6">
+                <h2>Lidar Output</h2>
+                <div class="mono-box" id="lidar-output">No lidar data yet.</div>
+                <div class="card-subtle">
+                    Placeholder area for scan summary, nearest obstacle, or raw lidar slices.
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -199,7 +505,26 @@
             }
         }
 
+        function initCameraPlaceholder() {
+            const img = document.getElementById('camera-feed');
+            const placeholder = document.getElementById('camera-placeholder');
+
+            if (!img.getAttribute('src')) {
+                placeholder.style.display = 'flex';
+                return;
+            }
+
+            img.onload = () => {
+                placeholder.style.display = 'none';
+            };
+
+            img.onerror = () => {
+                placeholder.style.display = 'flex';
+            };
+        }
+
         refreshData();
+        initCameraPlaceholder();
         setInterval(refreshData, 200);
     </script>
 </body>
