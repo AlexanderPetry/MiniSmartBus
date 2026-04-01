@@ -90,6 +90,7 @@ def service_status():
     services = [
         "web-visu.service",
         "uwb-mqtt.service",
+        "camera-stream.service",
         "mosquitto.service",
     ]
 
