@@ -80,7 +80,6 @@ import subprocess
 def service_status():
     services = [
         "position-web.service",
-        "minibus.service",
     ]
 
     data = []
