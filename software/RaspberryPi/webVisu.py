@@ -74,6 +74,7 @@ def api_position():
 def service_status():
     services = [
         "web-visu.service",
+        "mosquitto.service",
     ]
 
     data = []
