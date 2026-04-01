@@ -106,6 +106,7 @@ def service_status():
         "uwb-mqtt.service",
         "camera-stream.service",
         "mosquitto.service",
+        "actions.runner.AlexanderPetry-MiniSmartBus.minibus.service"
     ]
 
     data = []
