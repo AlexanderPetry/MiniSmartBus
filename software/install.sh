@@ -4,6 +4,7 @@ set -e
 WEB_APP_NAME="web-visu"
 SERIAL_APP_NAME="uwb-mqtt"
 CAMERA_APP_NAME="camera-stream"
+MPU_APP_NAME="mpu-mqtt"
 
 CURRENT_USER="${SUDO_USER:-$USER}"
 BASE_DIR="/home/${CURRENT_USER}"
@@ -15,6 +16,7 @@ YOLO_MODEL_URL="https://github.com/ultralytics/assets/releases/download/v8.3.0/y
 WEB_SERVICE_FILE="/etc/systemd/system/${WEB_APP_NAME}.service"
 SERIAL_SERVICE_FILE="/etc/systemd/system/${SERIAL_APP_NAME}.service"
 CAMERA_SERVICE_FILE="/etc/systemd/system/${CAMERA_APP_NAME}.service"
+MPU_SERVICE_FILE="/etc/systemd/system/${MPU_APP_NAME}.service"
 
 REPO_URL="https://github.com/AlexanderPetry/MiniSmartBus.git"
 
@@ -28,16 +30,26 @@ sudo apt install -y \
     python3-venv \
     python3-pip \
     python3-picamera2 \
+    python3-smbus \
+    i2c-tools \
     git \
     wget \
     mosquitto \
     mosquitto-clients
+
+if command -v raspi-config >/dev/null 2>&1; then
+    sudo raspi-config nonint do_i2c 0 || true
+fi
+
+echo "i2c-dev" | sudo tee /etc/modules-load.d/i2c.conf >/dev/null
+sudo modprobe i2c-dev || true
 
 sudo systemctl enable mosquitto
 sudo systemctl start mosquitto
 
 sudo usermod -a -G dialout "${CURRENT_USER}" || true
 sudo usermod -a -G video "${CURRENT_USER}" || true
+sudo usermod -a -G i2c "${CURRENT_USER}" || true
 
 mkdir -p "${LIVE_DIR}"
 
@@ -120,26 +132,43 @@ RestartSec=2
 WantedBy=multi-user.target
 EOF
 
+sudo tee "${MPU_SERVICE_FILE}" > /dev/null <<EOF
+[Unit]
+Description=MPU6050 I2C to MQTT Service
+After=network.target mosquitto.service
+Wants=mosquitto.service
+
+[Service]
+Type=simple
+User=${CURRENT_USER}
+WorkingDirectory=${LIVE_DIR}/software/RaspberryPi
+ExecStart=${LIVE_DIR}/.venv/bin/python ${LIVE_DIR}/software/RaspberryPi/mpu.py
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
 sudo systemctl daemon-reload
 
 sudo systemctl enable "${WEB_APP_NAME}.service"
 sudo systemctl enable "${SERIAL_APP_NAME}.service"
 sudo systemctl enable "${CAMERA_APP_NAME}.service"
+sudo systemctl enable "${MPU_APP_NAME}.service"
 
 sudo systemctl restart "${WEB_APP_NAME}.service"
 sudo systemctl restart "${SERIAL_APP_NAME}.service"
 sudo systemctl restart "${CAMERA_APP_NAME}.service"
+sudo systemctl restart "${MPU_APP_NAME}.service"
 
 echo
 echo "Install complete."
 echo
-echo "Web service status:"
-sudo systemctl status "${WEB_APP_NAME}.service" --no-pager || true
+echo "MPU MQTT service status:"
+sudo systemctl status "${MPU_APP_NAME}.service" --no-pager || true
 echo
-echo "Serial MQTT service status:"
-sudo systemctl status "${SERIAL_APP_NAME}.service" --no-pager || true
+echo "Test the topic with:"
+echo "mosquitto_sub -t minismartbus/sensors/mpu6050"
 echo
-echo "Camera stream service status:"
-sudo systemctl status "${CAMERA_APP_NAME}.service" --no-pager || true
-echo
-echo "Note: because dialout/video group membership changed, a logout/login or reboot may be needed before serial and camera access works."
+echo "Note: because dialout/video/i2c group membership changed, a logout/login or reboot may be needed before serial, camera, and I2C sensor access works."

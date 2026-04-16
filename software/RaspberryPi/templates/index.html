@@ -395,6 +395,8 @@
 
             <div class="card span-7">
                 <h2>MPU Output</h2>
+                <div id="mpu-status-banner" class="status-banner">Waiting for MPU data...</div>
+
                 <div class="two-col">
                     <div>
                         <div class="row">
@@ -408,6 +410,10 @@
                         <div class="row">
                             <span class="label">Accel Z</span>
                             <span class="value-neutral" id="mpu-az">-</span>
+                        </div>
+                        <div class="row">
+                            <span class="label">Temp °C</span>
+                            <span class="value-neutral" id="mpu-temp">-</span>
                         </div>
                     </div>
                     <div>
@@ -423,10 +429,28 @@
                             <span class="label">Gyro Z</span>
                             <span class="value-neutral" id="mpu-gz">-</span>
                         </div>
+                        <div class="row">
+                            <span class="label">Received</span>
+                            <span class="value-neutral" id="mpu-received-at">-</span>
+                        </div>
                     </div>
                 </div>
+
+                <div class="row">
+                    <span class="label">Sensor</span>
+                    <span class="value-neutral" id="mpu-sensor">-</span>
+                </div>
+                <div class="row">
+                    <span class="label">Host</span>
+                    <span class="value-neutral" id="mpu-host">-</span>
+                </div>
+                <div class="row">
+                    <span class="label">I2C</span>
+                    <span class="value-neutral" id="mpu-i2c">-</span>
+                </div>
+
                 <div class="card-subtle">
-                    Placeholder for IMU / MPU telemetry.
+                    Live IMU / MPU telemetry from MQTT.
                 </div>
             </div>
 
@@ -466,7 +490,20 @@
             nav.classList.toggle('open');
         }
 
-        async function refreshData() {
+        function setText(id, value, fallback = '-') {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.textContent = value ?? fallback;
+        }
+
+        function formatNumber(value, digits = 3) {
+            if (value === null || value === undefined || Number.isNaN(Number(value))) {
+                return '-';
+            }
+            return Number(value).toFixed(digits);
+        }
+
+        async function refreshPosition() {
             try {
                 const response = await fetch('/api/position');
                 const data = await response.json();
@@ -482,16 +519,64 @@
                     banner.style.color = '#ef4444';
                 }
 
-                document.getElementById('x').textContent = data.x ?? '-';
-                document.getElementById('y').textContent = data.y ?? '-';
-                document.getElementById('ts').textContent = data.ts ?? '-';
-                document.getElementById('received_at').textContent = data.received_at ?? '-';
+                setText('x', data.x);
+                setText('y', data.y);
+                setText('ts', data.ts);
+                setText('received_at', data.received_at);
             } catch (err) {
                 console.error('Failed to fetch position data:', err);
                 const banner = document.getElementById('status-banner');
-                banner.textContent = 'Failed to fetch data from server.';
+                banner.textContent = 'Failed to fetch position data from server.';
                 banner.style.color = '#ef4444';
             }
+        }
+
+        async function refreshMpu() {
+            try {
+                const response = await fetch('/api/mpu');
+                const data = await response.json();
+
+                const banner = document.getElementById('mpu-status-banner');
+                banner.textContent = data.message ?? 'Unknown MPU state';
+
+                if (data.state === 'ok') {
+                    banner.style.color = '#34d399';
+                } else if (data.state === 'stale') {
+                    banner.style.color = '#fbbf24';
+                } else {
+                    banner.style.color = '#ef4444';
+                }
+
+                setText('mpu-ax', formatNumber(data?.accel_g?.x));
+                setText('mpu-ay', formatNumber(data?.accel_g?.y));
+                setText('mpu-az', formatNumber(data?.accel_g?.z));
+
+                setText('mpu-gx', formatNumber(data?.gyro_dps?.x));
+                setText('mpu-gy', formatNumber(data?.gyro_dps?.y));
+                setText('mpu-gz', formatNumber(data?.gyro_dps?.z));
+
+                setText('mpu-temp', formatNumber(data?.temperature_c, 2));
+                setText('mpu-received-at', data.received_at);
+                setText('mpu-sensor', data.sensor);
+                setText('mpu-host', data.host);
+
+                const i2cText = (data.i2c_bus !== null && data.i2c_bus !== undefined)
+                    ? `bus ${data.i2c_bus}, addr ${data.i2c_address ?? '-'}`
+                    : '-';
+                setText('mpu-i2c', i2cText);
+            } catch (err) {
+                console.error('Failed to fetch MPU data:', err);
+                const banner = document.getElementById('mpu-status-banner');
+                banner.textContent = 'Failed to fetch MPU data from server.';
+                banner.style.color = '#ef4444';
+            }
+        }
+
+        async function refreshData() {
+            await Promise.all([
+                refreshPosition(),
+                refreshMpu()
+            ]);
         }
 
         function initCameraPlaceholder() {

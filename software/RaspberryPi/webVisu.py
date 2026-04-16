@@ -8,7 +8,9 @@ import paho.mqtt.client as mqtt
 
 MQTT_BROKER = "localhost"
 MQTT_PORT = 1883
-MQTT_TOPIC = "sensors/position"
+
+POSITION_TOPIC = "sensors/position"
+MPU_TOPIC = "minismartbus/sensors/mpu6050"
 
 WEB_HOST = "0.0.0.0"
 WEB_PORT = 5000
@@ -24,6 +26,21 @@ latest_position = {
     "received_at": None,
     "last_update_unix": None
 }
+
+latest_mpu = {
+    "timestamp": None,
+    "host": None,
+    "sensor": None,
+    "i2c_bus": None,
+    "i2c_address": None,
+    "accel_g": {"x": None, "y": None, "z": None},
+    "gyro_dps": {"x": None, "y": None, "z": None},
+    "temperature_c": None,
+    "raw": {},
+    "received_at": None,
+    "last_update_unix": None
+}
+
 data_lock = threading.Lock()
 
 app = Flask(__name__)
@@ -31,32 +48,49 @@ app = Flask(__name__)
 def on_connect(client, userdata, flags, rc):
     if rc == 0:
         print("Connected to MQTT broker")
-        client.subscribe(MQTT_TOPIC)
-        print(f"Subscribed to {MQTT_TOPIC}")
+        client.subscribe([
+            (POSITION_TOPIC, 0),
+            (MPU_TOPIC, 0),
+        ])
+        print(f"Subscribed to {POSITION_TOPIC}")
+        print(f"Subscribed to {MPU_TOPIC}")
     else:
         print(f"Failed to connect to MQTT broker, code={rc}")
 
 def on_message(client, userdata, msg):
-    global latest_position
+    global latest_position, latest_mpu
 
     try:
         payload = json.loads(msg.payload.decode("utf-8"))
     except Exception as e:
-        print("Invalid MQTT payload:", e)
+        print(f"Invalid MQTT payload on topic {msg.topic}: {e}")
         return
 
-    x = payload.get("x")
-    y = payload.get("y")
-    ts = payload.get("ts")
-
     with data_lock:
-        latest_position["x"] = x
-        latest_position["y"] = y
-        latest_position["ts"] = ts
-        latest_position["received_at"] = time.strftime("%Y-%m-%d %H:%M:%S")
-        latest_position["last_update_unix"] = time.time()
+        if msg.topic == POSITION_TOPIC:
+            latest_position["x"] = payload.get("x")
+            latest_position["y"] = payload.get("y")
+            latest_position["ts"] = payload.get("ts")
+            latest_position["received_at"] = time.strftime("%Y-%m-%d %H:%M:%S")
+            latest_position["last_update_unix"] = time.time()
+            print("Updated position:", latest_position)
 
-    print("Updated position:", latest_position)
+        elif msg.topic == MPU_TOPIC:
+            latest_mpu["timestamp"] = payload.get("timestamp")
+            latest_mpu["host"] = payload.get("host")
+            latest_mpu["sensor"] = payload.get("sensor")
+            latest_mpu["i2c_bus"] = payload.get("i2c_bus")
+            latest_mpu["i2c_address"] = payload.get("i2c_address")
+            latest_mpu["accel_g"] = payload.get("accel_g", {"x": None, "y": None, "z": None})
+            latest_mpu["gyro_dps"] = payload.get("gyro_dps", {"x": None, "y": None, "z": None})
+            latest_mpu["temperature_c"] = payload.get("temperature_c")
+            latest_mpu["raw"] = payload.get("raw", {})
+            latest_mpu["received_at"] = time.strftime("%Y-%m-%d %H:%M:%S")
+            latest_mpu["last_update_unix"] = time.time()
+            print("Updated MPU:", latest_mpu)
+
+        else:
+            print(f"Ignoring message from unexpected topic: {msg.topic}")
 
 mqtt_client = mqtt.Client()
 mqtt_client.on_connect = on_connect
@@ -88,6 +122,26 @@ def api_position():
 
     return jsonify(data)
 
+@app.route("/api/mpu")
+def api_mpu():
+    with data_lock:
+        data = json.loads(json.dumps(latest_mpu))
+
+    now = time.time()
+    last_update = data.get("last_update_unix")
+
+    if last_update is None:
+        data["state"] = "no_data"
+        data["message"] = "No valid MPU data received yet."
+    elif now - last_update > STALE_AFTER_SECONDS:
+        data["state"] = "stale"
+        data["message"] = "MPU data is stale."
+    else:
+        data["state"] = "ok"
+        data["message"] = "Live MPU data received."
+
+    return jsonify(data)
+
 @app.route("/camera_feed")
 def camera_feed():
     upstream = requests.get(CAMERA_STREAM_URL, stream=True, timeout=10)
@@ -105,6 +159,7 @@ def service_status():
         "web-visu.service",
         "uwb-mqtt.service",
         "camera-stream.service",
+        "mpu-mqtt.service",
         "mosquitto.service",
         "actions.runner.AlexanderPetry-MiniSmartBus.minibus.service"
     ]
