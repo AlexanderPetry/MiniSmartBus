@@ -16,8 +16,8 @@ sudo systemctl restart camera-stream.service
 echo "Restarting mpu-mqtt..."
 sudo systemctl restart mpu-mqtt.service
 
-echo "Restarting rc-car-mqtt..."
-sudo systemctl restart rc-car-mqtt.service
+echo "Restarting base-frame-mqtt..."
+sudo systemctl restart base-frame-mqtt.service
 
 echo
 echo "Current status:"
@@ -27,4 +27,4 @@ sudo systemctl --no-pager --full status \
     web-visu.service \
     camera-stream.service \
     mpu-mqtt.service \
-    rc-car-mqtt.service || true
+    base-frame-mqtt.service || true

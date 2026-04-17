@@ -5,7 +5,7 @@ WEB_APP_NAME="web-visu"
 SERIAL_APP_NAME="uwb-mqtt"
 CAMERA_APP_NAME="camera-stream"
 MPU_APP_NAME="mpu-mqtt"
-RC_CAR_APP_NAME="rc-car-mqtt"
+RC_CAR_APP_NAME="base-frame-mqtt"
 
 CURRENT_USER="${SUDO_USER:-$USER}"
 BASE_DIR="/home/${CURRENT_USER}"
