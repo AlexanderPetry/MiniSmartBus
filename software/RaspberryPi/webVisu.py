@@ -234,7 +234,7 @@ def service_status():
         "uwb-mqtt.service",
         "camera-stream.service",
         "mpu-mqtt.service",
-        "rc-car-mqtt.service",
+        "base-frame-mqtt.service",
         "mosquitto.service",
         "actions.runner.AlexanderPetry-MiniSmartBus.minibus.service"
     ]
