@@ -149,6 +149,20 @@
             flex: 1;
         }
 
+        .value-warn {
+            color: #fbbf24;
+            font-weight: bold;
+            text-align: right;
+            flex: 1;
+        }
+
+        .value-danger {
+            color: #ef4444;
+            font-weight: bold;
+            text-align: right;
+            flex: 1;
+        }
+
         .camera-card {
             display: flex;
             flex-direction: column;
@@ -214,18 +228,6 @@
             color: #9ca3af;
             font-size: 0.92rem;
             line-height: 1.45;
-        }
-
-        .mono-box {
-            background: #0b1220;
-            border: 1px solid #374151;
-            border-radius: 12px;
-            padding: 1rem;
-            min-height: 180px;
-            color: #d1d5db;
-            font-family: monospace;
-            white-space: pre-wrap;
-            overflow-wrap: break-word;
         }
 
         .two-col {
@@ -294,7 +296,9 @@
             }
 
             .value,
-            .value-neutral {
+            .value-neutral,
+            .value-warn,
+            .value-danger {
                 text-align: left;
             }
 
@@ -371,20 +375,6 @@
                 <h2>Recognized Objects</h2>
                 <div class="object-list" id="object-list">
                     <div class="object-item">
-                        <div class="object-title">chair</div>
-                        <div class="object-meta">
-                            confidence: 0.94<br>
-                            bbox: x=12%, y=18%, w=22%, h=28%
-                        </div>
-                    </div>
-                    <div class="object-item">
-                        <div class="object-title">person</div>
-                        <div class="object-meta">
-                            confidence: 0.88<br>
-                            bbox: x=52%, y=26%, w=18%, h=24%
-                        </div>
-                    </div>
-                    <div class="object-item">
                         <div class="object-title">No live detections yet</div>
                         <div class="object-meta">
                             Replace this list from your backend or JS once object detection data is available.
@@ -454,31 +444,81 @@
                 </div>
             </div>
 
-            <div class="card span-6">
-                <h2>ESP Status</h2>
-                <div class="row">
-                    <span class="label">Left motor speed</span>
-                    <span class="value-neutral" id="motor-left">-</span>
-                </div>
-                <div class="row">
-                    <span class="label">Right motor speed</span>
-                    <span class="value-neutral" id="motor-right">-</span>
-                </div>
-                <div class="row">
-                    <span class="label">Turning angle</span>
-                    <span class="value-neutral" id="turn-angle">-</span>
-                </div>
-                <div class="row">
-                    <span class="label">ESP state</span>
-                    <span class="value-neutral" id="esp-state">No data yet</span>
-                </div>
-            </div>
+            <div class="card span-12">
+                <h2>RC Car Status</h2>
+                <div id="rc-car-status-banner" class="status-banner">Waiting for RC car data...</div>
 
-            <div class="card span-6">
-                <h2>Lidar Output</h2>
-                <div class="mono-box" id="lidar-output">No lidar data yet.</div>
+                <div class="two-col">
+                    <div>
+                        <div class="row">
+                            <span class="label">RC Signal</span>
+                            <span class="value-neutral" id="rc-signal">-</span>
+                        </div>
+                        <div class="row">
+                            <span class="label">RC Status</span>
+                            <span class="value-neutral" id="rc-status">-</span>
+                        </div>
+                        <div class="row">
+                            <span class="label">CH1 us</span>
+                            <span class="value-neutral" id="rc-ch1-us">-</span>
+                        </div>
+                        <div class="row">
+                            <span class="label">CH2 us</span>
+                            <span class="value-neutral" id="rc-ch2-us">-</span>
+                        </div>
+                        <div class="row">
+                            <span class="label">Steering %</span>
+                            <span class="value" id="rc-steering-percent">-</span>
+                        </div>
+                        <div class="row">
+                            <span class="label">Servo Pos</span>
+                            <span class="value-neutral" id="rc-servo-pos">-</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="row">
+                            <span class="label">Throttle %</span>
+                            <span class="value-neutral" id="rc-throttle-percent">-</span>
+                        </div>
+                        <div class="row">
+                            <span class="label">Motor PWM</span>
+                            <span class="value-neutral" id="rc-motor-pwm">-</span>
+                        </div>
+                        <div class="row">
+                            <span class="label">Direction</span>
+                            <span class="value-neutral" id="rc-direction">-</span>
+                        </div>
+                        <div class="row">
+                            <span class="label">Battery Voltage</span>
+                            <span class="value-neutral" id="rc-battery-voltage">-</span>
+                        </div>
+                        <div class="row">
+                            <span class="label">Battery %</span>
+                            <span class="value" id="rc-battery-percent">-</span>
+                        </div>
+                        <div class="row">
+                            <span class="label">Battery Warn</span>
+                            <span class="value-neutral" id="rc-battery-warn">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <span class="label">Host</span>
+                    <span class="value-neutral" id="rc-host">-</span>
+                </div>
+                <div class="row">
+                    <span class="label">Source</span>
+                    <span class="value-neutral" id="rc-source">-</span>
+                </div>
+                <div class="row">
+                    <span class="label">Received</span>
+                    <span class="value-neutral" id="rc-received-at">-</span>
+                </div>
+
                 <div class="card-subtle">
-                    Placeholder area for scan summary, nearest obstacle, or raw lidar slices.
+                    Live RC car telemetry from Arduino over serial, bridged into MQTT and served by Flask.
                 </div>
             </div>
         </div>
@@ -494,6 +534,12 @@
             const el = document.getElementById(id);
             if (!el) return;
             el.textContent = value ?? fallback;
+        }
+
+        function setClass(id, className) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.className = className;
         }
 
         function formatNumber(value, digits = 3) {
@@ -572,10 +618,83 @@
             }
         }
 
+        async function refreshRcCar() {
+            try {
+                const response = await fetch('/api/rc_car');
+                const data = await response.json();
+
+                const banner = document.getElementById('rc-car-status-banner');
+                banner.textContent = data.message ?? 'Unknown RC car state';
+
+                if (data.state === 'ok') {
+                    banner.style.color = '#34d399';
+                } else if (data.state === 'stale') {
+                    banner.style.color = '#fbbf24';
+                } else {
+                    banner.style.color = '#ef4444';
+                }
+
+                setText('rc-signal', data?.rc?.signal !== null && data?.rc?.signal !== undefined
+                    ? (data.rc.signal ? 'OK' : 'LOST')
+                    : '-');
+
+                setText('rc-status', data?.rc?.status);
+                setText('rc-ch1-us', data?.rc?.ch1_us);
+                setText('rc-ch2-us', data?.rc?.ch2_us);
+
+                setText('rc-steering-percent', data?.steering?.percent);
+                setText('rc-servo-pos', data?.steering?.servo_pos);
+
+                setText('rc-throttle-percent', data?.throttle?.percent);
+                setText('rc-motor-pwm', data?.motor?.speed_pwm);
+                setText('rc-direction', data?.motor?.direction);
+
+                setText('rc-battery-voltage', formatNumber(data?.battery?.voltage, 2));
+                setText('rc-battery-percent', data?.battery?.percent);
+                setText('rc-battery-warn', data?.battery?.warn);
+
+                setText('rc-host', data?.host);
+                setText('rc-source', data?.source);
+                setText('rc-received-at', data?.received_at);
+
+                const batteryVoltageEl = document.getElementById('rc-battery-voltage');
+                const batteryPercentEl = document.getElementById('rc-battery-percent');
+                const batteryWarnEl = document.getElementById('rc-battery-warn');
+                const signalEl = document.getElementById('rc-signal');
+
+                batteryVoltageEl.className = 'value-neutral';
+                batteryPercentEl.className = 'value';
+                batteryWarnEl.className = 'value-neutral';
+                signalEl.className = 'value-neutral';
+
+                if (data?.battery?.warn === 'low') {
+                    batteryVoltageEl.className = 'value-danger';
+                    batteryPercentEl.className = 'value-danger';
+                    batteryWarnEl.className = 'value-danger';
+                } else if (data?.battery?.warn === 'ok') {
+                    batteryVoltageEl.className = 'value';
+                    batteryPercentEl.className = 'value';
+                    batteryWarnEl.className = 'value';
+                }
+
+                if (data?.rc?.signal === 0) {
+                    signalEl.className = 'value-danger';
+                } else if (data?.rc?.signal === 1) {
+                    signalEl.className = 'value';
+                }
+            } catch (err) {
+                console.error('Failed to fetch RC car data:', err);
+                const banner = document.getElementById('rc-car-status-banner');
+                banner.textContent = 'Failed to fetch RC car data from server.';
+                banner.style.color = '#ef4444';
+            }
+        }
+
         async function refreshData() {
             await Promise.all([
                 refreshPosition(),
-                refreshMpu()
+                refreshMpu(),
+                refreshRcCar()
             ]);
         }
 

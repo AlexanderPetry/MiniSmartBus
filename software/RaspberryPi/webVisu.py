@@ -11,6 +11,7 @@ MQTT_PORT = 1883
 
 POSITION_TOPIC = "sensors/position"
 MPU_TOPIC = "minismartbus/sensors/mpu6050"
+RC_CAR_TOPIC = "minismartbus/rc_car/state"
 
 WEB_HOST = "0.0.0.0"
 WEB_PORT = 5000
@@ -41,6 +42,42 @@ latest_mpu = {
     "last_update_unix": None
 }
 
+latest_rc_car = {
+    "timestamp": None,
+    "host": None,
+    "source": None,
+    "rc": {
+        "signal": None,
+        "status": None,
+        "ch1_us": None,
+        "ch2_us": None
+    },
+    "steering": {
+        "percent": None,
+        "servo_pos": None
+    },
+    "throttle": {
+        "percent": None
+    },
+    "motor": {
+        "speed_pwm": None,
+        "direction": None
+    },
+    "battery": {
+        "voltage": None,
+        "percent": None,
+        "warn": None
+    },
+    "status": {
+        "state": None,
+        "info": None,
+        "heartbeat": None
+    },
+    "raw": {},
+    "received_at": None,
+    "last_update_unix": None
+}
+
 data_lock = threading.Lock()
 
 app = Flask(__name__)
@@ -51,14 +88,16 @@ def on_connect(client, userdata, flags, rc):
         client.subscribe([
             (POSITION_TOPIC, 0),
             (MPU_TOPIC, 0),
+            (RC_CAR_TOPIC, 0),
         ])
         print(f"Subscribed to {POSITION_TOPIC}")
         print(f"Subscribed to {MPU_TOPIC}")
+        print(f"Subscribed to {RC_CAR_TOPIC}")
     else:
         print(f"Failed to connect to MQTT broker, code={rc}")
 
 def on_message(client, userdata, msg):
-    global latest_position, latest_mpu
+    global latest_position, latest_mpu, latest_rc_car
 
     try:
         payload = json.loads(msg.payload.decode("utf-8"))
@@ -88,6 +127,21 @@ def on_message(client, userdata, msg):
             latest_mpu["received_at"] = time.strftime("%Y-%m-%d %H:%M:%S")
             latest_mpu["last_update_unix"] = time.time()
             print("Updated MPU:", latest_mpu)
+
+        elif msg.topic == RC_CAR_TOPIC:
+            latest_rc_car["timestamp"] = payload.get("timestamp")
+            latest_rc_car["host"] = payload.get("host")
+            latest_rc_car["source"] = payload.get("source")
+            latest_rc_car["rc"] = payload.get("rc", {})
+            latest_rc_car["steering"] = payload.get("steering", {})
+            latest_rc_car["throttle"] = payload.get("throttle", {})
+            latest_rc_car["motor"] = payload.get("motor", {})
+            latest_rc_car["battery"] = payload.get("battery", {})
+            latest_rc_car["status"] = payload.get("status", {})
+            latest_rc_car["raw"] = payload.get("raw", {})
+            latest_rc_car["received_at"] = time.strftime("%Y-%m-%d %H:%M:%S")
+            latest_rc_car["last_update_unix"] = time.time()
+            print("Updated RC Car:", latest_rc_car)
 
         else:
             print(f"Ignoring message from unexpected topic: {msg.topic}")
@@ -142,6 +196,26 @@ def api_mpu():
 
     return jsonify(data)
 
+@app.route("/api/rc_car")
+def api_rc_car():
+    with data_lock:
+        data = json.loads(json.dumps(latest_rc_car))
+
+    now = time.time()
+    last_update = data.get("last_update_unix")
+
+    if last_update is None:
+        data["state"] = "no_data"
+        data["message"] = "No valid RC car data received yet."
+    elif now - last_update > STALE_AFTER_SECONDS:
+        data["state"] = "stale"
+        data["message"] = "RC car data is stale."
+    else:
+        data["state"] = "ok"
+        data["message"] = "Live RC car data received."
+
+    return jsonify(data)
+
 @app.route("/camera_feed")
 def camera_feed():
     upstream = requests.get(CAMERA_STREAM_URL, stream=True, timeout=10)
@@ -160,6 +234,7 @@ def service_status():
         "uwb-mqtt.service",
         "camera-stream.service",
         "mpu-mqtt.service",
+        "rc-car-mqtt.service",
         "mosquitto.service",
         "actions.runner.AlexanderPetry-MiniSmartBus.minibus.service"
     ]

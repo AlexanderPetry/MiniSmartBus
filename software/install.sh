@@ -5,10 +5,12 @@ WEB_APP_NAME="web-visu"
 SERIAL_APP_NAME="uwb-mqtt"
 CAMERA_APP_NAME="camera-stream"
 MPU_APP_NAME="mpu-mqtt"
+RC_CAR_APP_NAME="base-frame-mqtt"
 
 CURRENT_USER="${SUDO_USER:-$USER}"
 BASE_DIR="/home/${CURRENT_USER}"
 LIVE_DIR="${BASE_DIR}/MiniSmartBus-live"
+PI_DIR="${LIVE_DIR}/software/RaspberryPi"
 MODEL_DIR="${LIVE_DIR}/software/RaspberryPi/models"
 YOLO_MODEL_FILE="${MODEL_DIR}/yolov8n.pt"
 YOLO_MODEL_URL="https://github.com/ultralytics/assets/releases/download/v8.3.0/yolov8n.pt"
@@ -17,8 +19,14 @@ WEB_SERVICE_FILE="/etc/systemd/system/${WEB_APP_NAME}.service"
 SERIAL_SERVICE_FILE="/etc/systemd/system/${SERIAL_APP_NAME}.service"
 CAMERA_SERVICE_FILE="/etc/systemd/system/${CAMERA_APP_NAME}.service"
 MPU_SERVICE_FILE="/etc/systemd/system/${MPU_APP_NAME}.service"
+RC_CAR_SERVICE_FILE="/etc/systemd/system/${RC_CAR_APP_NAME}.service"
 
 REPO_URL="https://github.com/AlexanderPetry/MiniSmartBus.git"
+
+RC_CAR_SCRIPT_SRC="${PI_DIR}/rc_car_serial_mqtt.py"
+RC_CAR_DEFAULT_SERIAL="/dev/ttyACM0"
+RC_CAR_MQTT_TOPIC="minismartbus/rc_car/state"
+
 
 echo "Installing services into stable git directory..."
 echo "User: ${CURRENT_USER}"
@@ -70,12 +78,20 @@ pip install --upgrade pip
 pip install flask paho-mqtt pyserial requests ultralytics opencv-python
 
 mkdir -p "${MODEL_DIR}"
+mkdir -p "${PI_DIR}"
 
 if [ -f "${YOLO_MODEL_FILE}" ]; then
     echo "YOLO model already exists: ${YOLO_MODEL_FILE}"
 else
     echo "Downloading YOLO model to ${YOLO_MODEL_FILE} ..."
     wget -O "${YOLO_MODEL_FILE}" "${YOLO_MODEL_URL}"
+fi
+
+if [ -f "./software/RaspberryPi/rc_car_serial_mqtt.py" ]; then
+    chmod +x "./software/RaspberryPi/rc_car_serial_mqtt.py"
+else
+    echo "WARNING: ./software/RaspberryPi/rc_car_serial_mqtt.py not found in repo yet."
+    echo "Copy the provided rc_car_serial_mqtt.py into ${PI_DIR}/ before starting the service."
 fi
 
 sudo tee "${WEB_SERVICE_FILE}" > /dev/null <<EOF
@@ -87,8 +103,8 @@ Wants=mosquitto.service
 [Service]
 Type=simple
 User=${CURRENT_USER}
-WorkingDirectory=${LIVE_DIR}/software/RaspberryPi
-ExecStart=${LIVE_DIR}/.venv/bin/python ${LIVE_DIR}/software/RaspberryPi/webVisu.py
+WorkingDirectory=${PI_DIR}
+ExecStart=${LIVE_DIR}/.venv/bin/python ${PI_DIR}/webVisu.py
 Restart=always
 RestartSec=2
 
@@ -105,8 +121,8 @@ Wants=mosquitto.service
 [Service]
 Type=simple
 User=${CURRENT_USER}
-WorkingDirectory=${LIVE_DIR}/software/RaspberryPi
-ExecStart=${LIVE_DIR}/.venv/bin/python ${LIVE_DIR}/software/RaspberryPi/DMW1001_PositionExtracter.py
+WorkingDirectory=${PI_DIR}
+ExecStart=${LIVE_DIR}/.venv/bin/python ${PI_DIR}/DMW1001_PositionExtracter.py
 Restart=always
 RestartSec=2
 
@@ -123,8 +139,8 @@ Wants=network.target
 [Service]
 Type=simple
 User=${CURRENT_USER}
-WorkingDirectory=${LIVE_DIR}/software/RaspberryPi
-ExecStart=${LIVE_DIR}/.venv/bin/python ${LIVE_DIR}/software/RaspberryPi/vision.py
+WorkingDirectory=${PI_DIR}
+ExecStart=${LIVE_DIR}/.venv/bin/python ${PI_DIR}/vision.py
 Restart=always
 RestartSec=2
 
@@ -141,8 +157,33 @@ Wants=mosquitto.service
 [Service]
 Type=simple
 User=${CURRENT_USER}
-WorkingDirectory=${LIVE_DIR}/software/RaspberryPi
-ExecStart=${LIVE_DIR}/.venv/bin/python ${LIVE_DIR}/software/RaspberryPi/mpu.py
+WorkingDirectory=${PI_DIR}
+ExecStart=${LIVE_DIR}/.venv/bin/python ${PI_DIR}/mpu.py
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo tee "${RC_CAR_SERVICE_FILE}" > /dev/null <<EOF
+[Unit]
+Description=RC Car Serial to MQTT Service
+After=network.target mosquitto.service
+Wants=mosquitto.service
+
+[Service]
+Type=simple
+User=${CURRENT_USER}
+WorkingDirectory=${PI_DIR}
+Environment=MQTT_BROKER=localhost
+Environment=MQTT_PORT=1883
+Environment=SERIAL_PORT=${RC_CAR_DEFAULT_SERIAL}
+Environment=SERIAL_BAUD=115200
+Environment=SERIAL_AUTO_DISCOVER=1
+Environment=MQTT_BASE_TOPIC=minismartbus/rc_car
+Environment=MQTT_JSON_TOPIC=${RC_CAR_MQTT_TOPIC}
+ExecStart=${LIVE_DIR}/.venv/bin/python ${PI_DIR}/baseFrame.py
 Restart=always
 RestartSec=2
 
@@ -156,19 +197,24 @@ sudo systemctl enable "${WEB_APP_NAME}.service"
 sudo systemctl enable "${SERIAL_APP_NAME}.service"
 sudo systemctl enable "${CAMERA_APP_NAME}.service"
 sudo systemctl enable "${MPU_APP_NAME}.service"
+sudo systemctl enable "${RC_CAR_APP_NAME}.service"
 
 sudo systemctl restart "${WEB_APP_NAME}.service"
 sudo systemctl restart "${SERIAL_APP_NAME}.service"
 sudo systemctl restart "${CAMERA_APP_NAME}.service"
 sudo systemctl restart "${MPU_APP_NAME}.service"
+sudo systemctl restart "${RC_CAR_APP_NAME}.service"
 
 echo
 echo "Install complete."
 echo
-echo "MPU MQTT service status:"
-sudo systemctl status "${MPU_APP_NAME}.service" --no-pager || true
+echo "RC car MQTT service status:"
+sudo systemctl status "${RC_CAR_APP_NAME}.service" --no-pager || true
 echo
-echo "Test the topic with:"
-echo "mosquitto_sub -t minismartbus/sensors/mpu6050"
+echo "Test the RC car topic with:"
+echo "mosquitto_sub -t ${RC_CAR_MQTT_TOPIC}"
+echo
+echo "Raw per-line topic mirror example:"
+echo "mosquitto_sub -t 'minismartbus/rc_car/raw/#'"
 echo
 echo "Note: because dialout/video/i2c group membership changed, a logout/login or reboot may be needed before serial, camera, and I2C sensor access works."
