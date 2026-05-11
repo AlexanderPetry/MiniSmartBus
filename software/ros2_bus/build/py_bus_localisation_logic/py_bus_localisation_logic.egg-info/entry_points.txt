@@ -1,0 +1,3 @@
+[console_scripts]
+pose_estimator = py_bus_localisation_logic.pose_estimator:main
+uwb_map_bridge = py_bus_localisation_logic.uwb_map_bridge:main

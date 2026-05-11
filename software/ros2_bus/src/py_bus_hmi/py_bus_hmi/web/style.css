@@ -1,0 +1,95 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+  color: #222;
+  margin: 0;
+  padding: 2rem;
+}
+
+main {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+h1 {
+  margin-bottom: 1.5rem;
+}
+
+.card {
+  background: white;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.control-group {
+  margin-bottom: 1rem;
+}
+
+.control-group label {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+.control-group input[type="range"] {
+  width: 100%;
+}
+
+.slider-value {
+  margin-top: 0.35rem;
+  font-size: 0.95rem;
+  color: #444;
+}
+
+#command-state {
+  margin: 0.5rem 0 0;
+  font-weight: 600;
+  color: #0b5;
+}
+
+#camera-feed {
+  width: 100%;
+  border-radius: 8px;
+  background: #ddd;
+}
+
+pre {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.page-subtitle {
+  margin: 0.35rem 0 0;
+  color: #555;
+}
+
+.page-nav {
+  display: flex;
+  align-items: center;
+}
+
+.nav-button {
+  display: inline-block;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  background: #0b5;
+  color: white;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.nav-button:hover {
+  background: #094;
+}

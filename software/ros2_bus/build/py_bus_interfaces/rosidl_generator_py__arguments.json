@@ -1,0 +1,36 @@
+{
+  "package_name": "py_bus_interfaces",
+  "output_dir": "/home/admin/ros2_bus/build/py_bus_interfaces/rosidl_generator_py/py_bus_interfaces",
+  "template_dir": "/opt/ros/kilted/share/rosidl_generator_py/cmake/../resource",
+  "idl_tuples": [
+    "/home/admin/ros2_bus/build/py_bus_interfaces/rosidl_adapter/py_bus_interfaces:msg/ImuData.idl",
+    "/home/admin/ros2_bus/build/py_bus_interfaces/rosidl_adapter/py_bus_interfaces:msg/UwbData.idl",
+    "/home/admin/ros2_bus/build/py_bus_interfaces/rosidl_adapter/py_bus_interfaces:msg/DriverStatus.idl",
+    "/home/admin/ros2_bus/build/py_bus_interfaces/rosidl_adapter/py_bus_interfaces:msg/DriverCommand.idl"
+  ],
+  "ros_interface_dependencies": [
+    "builtin_interfaces:/opt/ros/kilted/share/builtin_interfaces/msg/Duration.idl",
+    "builtin_interfaces:/opt/ros/kilted/share/builtin_interfaces/msg/Time.idl"
+  ],
+  "target_dependencies": [
+    "/opt/ros/kilted/share/rosidl_generator_py/cmake/../../../lib/rosidl_generator_py/rosidl_generator_py",
+    "/opt/ros/kilted/lib/python3.12/site-packages/rosidl_generator_py/__init__.py",
+    "/opt/ros/kilted/lib/python3.12/site-packages/rosidl_generator_py/generate_py_impl.py",
+    "/opt/ros/kilted/share/rosidl_generator_py/cmake/../resource/_action_pkg_typesupport_entry_point.c.em",
+    "/opt/ros/kilted/share/rosidl_generator_py/cmake/../resource/_action.py.em",
+    "/opt/ros/kilted/share/rosidl_generator_py/cmake/../resource/_idl_pkg_typesupport_entry_point.c.em",
+    "/opt/ros/kilted/share/rosidl_generator_py/cmake/../resource/_idl_support.c.em",
+    "/opt/ros/kilted/share/rosidl_generator_py/cmake/../resource/_idl.py.em",
+    "/opt/ros/kilted/share/rosidl_generator_py/cmake/../resource/_msg_pkg_typesupport_entry_point.c.em",
+    "/opt/ros/kilted/share/rosidl_generator_py/cmake/../resource/_msg_support.c.em",
+    "/opt/ros/kilted/share/rosidl_generator_py/cmake/../resource/_msg.py.em",
+    "/opt/ros/kilted/share/rosidl_generator_py/cmake/../resource/_srv_pkg_typesupport_entry_point.c.em",
+    "/opt/ros/kilted/share/rosidl_generator_py/cmake/../resource/_srv.py.em",
+    "/home/admin/ros2_bus/build/py_bus_interfaces/rosidl_adapter/py_bus_interfaces/msg/ImuData.idl",
+    "/home/admin/ros2_bus/build/py_bus_interfaces/rosidl_adapter/py_bus_interfaces/msg/UwbData.idl",
+    "/home/admin/ros2_bus/build/py_bus_interfaces/rosidl_adapter/py_bus_interfaces/msg/DriverStatus.idl",
+    "/home/admin/ros2_bus/build/py_bus_interfaces/rosidl_adapter/py_bus_interfaces/msg/DriverCommand.idl",
+    "/opt/ros/kilted/share/builtin_interfaces/msg/Duration.idl",
+    "/opt/ros/kilted/share/builtin_interfaces/msg/Time.idl"
+  ]
+}

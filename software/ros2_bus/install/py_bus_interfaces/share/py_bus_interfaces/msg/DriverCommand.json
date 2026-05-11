@@ -1,0 +1,36 @@
+{
+  "type_description_msg": {
+    "type_description": {
+      "type_name": "py_bus_interfaces/msg/DriverCommand",
+      "fields": [
+        {
+          "name": "speed_kmh",
+          "type": {
+            "type_id": 10,
+            "capacity": 0,
+            "string_capacity": 0,
+            "nested_type_name": ""
+          },
+          "default_value": ""
+        },
+        {
+          "name": "steering_deg",
+          "type": {
+            "type_id": 10,
+            "capacity": 0,
+            "string_capacity": 0,
+            "nested_type_name": ""
+          },
+          "default_value": ""
+        }
+      ]
+    },
+    "referenced_type_descriptions": []
+  },
+  "type_hashes": [
+    {
+      "type_name": "py_bus_interfaces/msg/DriverCommand",
+      "hash_string": "RIHS01_cdaa8d55726470dbdd46bd05249d0aef06a082d76649c34796d5dfca567c83b5"
+    }
+  ]
+}

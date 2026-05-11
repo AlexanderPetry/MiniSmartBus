@@ -1,0 +1,235 @@
+install tailscale for remote access
+
+ubuntu 24.04 required
+
+install ROS2 - kilted kaiju
+install colcon
+
+every time :: source /opt/ros/kilted/setup.bash
+
+
+1. create a workspace
+2. setup workspace structure
+3. define .msg and .srv files
+4. create packages
+
+
+
+Project
+- src
+|- py_bus_bringup (startup everything)
+|
+|- py_bus_localisation_hw (raw sensor data -> structured data)
+|  |- package.xml
+|  |- setup.cfg
+|  |- setup.py
+|  |- resource/
+|  |  |- bus_localisation_hw
+|  |
+|  |- launch/
+|  |  |- localisation_hw.launch.py
+|  |
+|  |- config/
+|  |  |- imu.yaml
+|  |  |- uwb.yaml
+|  |
+|  |- bus_localisation_hw/
+|  |  |- __init__.py
+|  |  |- uwb_node.py
+|  |  |- imu_node.py
+|  |
+|  |- test/
+|  
+|- py_bus_localisation_logic (structured data -> pose estimation)
+|
+|- py_bus_perception_hw (raw sensor data -> structured data)
+|
+|- py_bus_perception_logic (raw sensor data -> world interpretation)
+|
+|- py_bus_behavior (pose estimation + world interpretation -> decision)
+|
+|- py_bus_controller (decision -> motor + steering commands
+|
+|- py_bus_driver (communication between ESP32 & RaspberryPi)
+|
+|- py_bus_hmi (web interface)
+|  |- package.xml
+|  |- setup.py
+|  |- setup.cfg
+|  |- resource/
+|  |  |- py_bus_hmi
+|  |
+|  |- launch/
+|  |  |- hmi.launch.py
+|  |
+|  |- py_bus_hmi/
+|  |  |- __init__.py
+|  |  |- web_server_node.py
+|  |  |- web/
+|  |  |  |- index.html
+|  |  |  |- style.css
+|  |  |  |- app.js
+|  |  |
+|  |- test/
+|
+|- py_bus_interfaces (message definitions)
+|  |- CMakeLists.txt
+|  |- package.xml
+|  |- msg/
+|  |  |- ImuData.msg
+|  |  |- UwbData.msg
+|  |  |- PoseEstimation.msg
+|  |
+|  |- srv/
+|  |
+|  |- action/
+|  |
+
+
+COMMANDS USED
+source /opt/ros/kilted/setup.bash
+mkdir -p ~/ros2_bus/src
+cd ros2_bus/src/
+# creating packages
+ros2 pkg create --build-type ament_python --license Apache-2.0 py_bus_bringup
+ros2 pkg create --build-type ament_python --license Apache-2.0 py_bus_localisation_hw
+ros2 pkg create --build-type ament_python --license Apache-2.0 py_bus_localisation_logic
+ros2 pkg create --build-type ament_python --license Apache-2.0 py_bus_perception_hw
+ros2 pkg create --build-type ament_python --license Apache-2.0 py_bus_perception_logic
+ros2 pkg create --build-type ament_python --license Apache-2.0 py_bus_behavior
+ros2 pkg create --build-type ament_python --license Apache-2.0 py_bus_controller
+ros2 pkg create --build-type ament_python --license Apache-2.0 py_bus_driver
+ros2 pkg create --build-type ament_python --license Apache-2.0 py_bus_hmi
+# create message package
+ros2 pkg create --build-type ament_cmake --license Apache-2.0 py_bus_interfaces
+cd py_bus_interfaces
+mkdir msg
+mkdir srv
+mkdir action
+
+
+sudo apt update
+sudo apt install python3-smbus i2c-tools python3-serial python3-flask v4l-utils libcamera-tools
+sudo apt update
+
+sudo apt install -y \
+  ros-$ROS_DISTRO-cv-bridge \
+  ros-$ROS_DISTRO-image-transport \
+  ros-$ROS_DISTRO-sensor-msgs \
+  python3-opencv \
+  python3-pip
+
+sudo apt-get update
+sudo apt-get install \
+  ros-kilted-nav2-smac-planner \
+  ros-kilted-nav2-planner \
+  ros-kilted-nav2-map-server \
+  ros-kilted-nav2-costmap-2d \
+  ros-kilted-nav2-msgs
+
+sudo apt install ros-kilted-rosbridge-suite
+
+source /opt/ros/kilted/setup.bash
+
+sudo apt update
+apt search ros-kilted-nav2 | head
+apt search ros-kilted-navigation2 | head
+
+sudo apt install ros-kilted-navigation2 ros-kilted-nav2-bringup
+
+sudo apt install ros-kilted-nav2-bringup
+
+
+
+python3 -m pip install --upgrade pip
+python3 -m pip install ultralytics --break-system-packages
+python3 -m pip install --break-system-packages "numpy<2"
+
+
+rosdep install -i --from-path src --rosdistro kilted -y
+
+colcon build --symlink-install
+source /opt/ros/kilted/setup.bash
+source install/setup.bash
+ros2 run py_bus_localisation_hw imu_node
+ros2 run py_bus_localisation_hw uwb_node
+ros2 run py_bus_hmi web_visu_node
+ros2 run py_bus_perception_logic object_detection
+ros2 run py_bus_driver driver_node
+
+
+
+cd ~/ros2_bus
+rm -rf build install log
+source /opt/ros/$ROS_DISTRO/setup.bash
+colcon build --symlink-install
+
+
+cd ~/ros2_bus
+rm -rf build install log
+source /opt/ros/kilted/setup.bash
+colcon build --symlink-install
+source install/setup.bash
+ros2 launch py_bus_bringup bringup.launch.py
+
+
+ros2 lifecycle get /map_server
+ros2 lifecycle get /planner_server
+ros2 lifecycle get /controller_server  
+ros2 lifecycle get /behavior_server 
+ros2 lifecycle get /bt_navigator 
+ros2 lifecycle get /smoother_server 
+
+# Already done ✅
+ros2 lifecycle set /map_server activate
+ros2 lifecycle set /planner_server activate
+
+# Configure the rest (were unconfigured [1])
+ros2 lifecycle set /controller_server configure  
+ros2 lifecycle set /behavior_server configure
+ros2 lifecycle set /bt_navigator configure
+ros2 lifecycle set /smoother_server configure
+
+# Now activate them
+ros2 lifecycle set /controller_server activate
+ros2 lifecycle set /behavior_server activate  
+ros2 lifecycle set /bt_navigator activate
+ros2 lifecycle set /smoother_server activate
+
+
+http://100.65.224.83:8000
+ws://100.65.224.83:9090
+
+#cmaera isntall
+sudo apt update
+sudo apt install -y \
+  git python3-pip python3-jinja2 python3-yaml python3-ply \
+  meson cmake ninja-build \
+  libboost-dev libgnutls28-dev openssl libtiff5-dev pybind11-dev \
+  libglib2.0-dev libgstreamer-plugins-base1.0-dev \
+  libboost-program-options-dev libdrm-dev libexif-dev \
+  libepoxy-dev libjpeg-dev libpng-dev \
+  qtbase5-dev libqt5core5a libqt5gui5 libqt5widgets5 \
+  v4l-utils
+
+sudo apt remove --purge -y libcamera-dev libcamera0 libcamera-tools
+
+cd ~
+git clone https://github.com/raspberrypi/libcamera.git
+cd libcamera
+
+meson setup build --buildtype=release \
+  -Dpipelines=rpi/vc4,rpi/pisp \
+  -Dipas=rpi/vc4,rpi/pisp \
+  -Dv4l2=true \
+  -Dgstreamer=enabled \
+  -Dtest=false \
+  -Dlc-compliance=disabled \
+  -Dcam=disabled \
+  -Dqcam=disabled \
+  -Ddocumentation=disabled \
+  -Dpycamera=enabled
+
+ninja -C build
+sudo ninja -C build install
+sudo ldconfig

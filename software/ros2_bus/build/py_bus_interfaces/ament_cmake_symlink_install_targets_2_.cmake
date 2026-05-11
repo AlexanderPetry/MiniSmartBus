@@ -1,0 +1,1 @@
+ament_cmake_symlink_install_targets("TARGET_FILES" "/home/admin/ros2_bus/build/py_bus_interfaces/rosidl_generator_py/py_bus_interfaces/py_bus_interfaces_s__rosidl_typesupport_c.so" "TARGETS" "py_bus_interfaces_s__rosidl_typesupport_c" "DESTINATION" "lib/python3.12/site-packages/py_bus_interfaces")

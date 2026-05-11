@@ -1,0 +1,9 @@
+{
+  "package_name": "py_bus_interfaces",
+  "non_idl_tuples": [
+    "/home/admin/ros2_bus/src/py_bus_interfaces:msg/ImuData.msg",
+    "/home/admin/ros2_bus/src/py_bus_interfaces:msg/UwbData.msg",
+    "/home/admin/ros2_bus/src/py_bus_interfaces:msg/DriverStatus.msg",
+    "/home/admin/ros2_bus/src/py_bus_interfaces:msg/DriverCommand.msg"
+  ]
+}

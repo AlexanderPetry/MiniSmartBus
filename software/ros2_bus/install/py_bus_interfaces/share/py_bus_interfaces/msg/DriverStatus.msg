@@ -1,0 +1,11 @@
+builtin_interfaces/Time stamp
+string source
+int32 rc_steering_us
+int32 rc_throttle_us
+float32 commanded_speed_kmh
+float32 commanded_steering_deg
+float32 applied_speed_kmh
+float32 applied_steering_deg
+float32 batt_voltage
+float32 batt_pct
+string raw_line

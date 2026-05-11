@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>py_bus navigation</title>
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .toolbar button {
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+
+    .toolbar .active {
+      background: #1d4ed8;
+      color: white;
+      border-color: #1d4ed8;
+    }
+
+    .status-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 8px;
+      margin: 12px 0;
+    }
+
+    .mini-card {
+      padding: 10px;
+      border: 1px solid #d0d7de;
+      border-radius: 8px;
+      background: #fafafa;
+      font-size: 14px;
+    }
+
+    #map-canvas {
+      border: 1px solid #c9c9c9;
+      max-width: 100%;
+      height: auto;
+      image-rendering: pixelated;
+      cursor: crosshair;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>py_bus navigation</h1>
+
+    <section class="card">
+      <p><a href="/">Back to dashboard</a></p>
+
+      <div class="toolbar">
+        <button id="mode-manual" type="button">Manual</button>
+        <button id="mode-auto" type="button">Auto guided</button>
+        <span id="mode-label">mode: unknown</span>
+      </div>
+
+      <div class="toolbar">
+        <button id="tool-goal" type="button" class="active">Goal tool</button>
+        <button id="tool-obstacle" type="button">Obstacle tool</button>
+        <button id="clear-obstacles" type="button">Clear obstacles</button>
+        <button id="toggle-obstacles" type="button">Hide obstacles</button>
+        <span id="tool-label">tool: goal</span>
+      </div>
+
+      <div class="status-grid">
+        <div class="mini-card">
+          <strong>Nav command</strong><br>
+          <span id="cmdvel-label">waiting for /cmd_vel...</span>
+        </div>
+        <div class="mini-card">
+          <strong>Obstacle editor</strong><br>
+          <span id="obstacle-label">0 obstacles</span>
+        </div>
+        <div class="mini-card">
+          <strong>Hint</strong><br>
+          <span id="hint-label">goal tool: click once for position, click again for heading</span>
+        </div>
+      </div>
+
+      <canvas id="map-canvas" width="500" height="500"></canvas>
+      <p id="nav-state">waiting for rosbridge...</p>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/roslib@1/build/roslib.min.js"></script>
+  <script src="/navigation.js"></script>
+</body>
+</html>

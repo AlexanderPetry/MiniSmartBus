@@ -1,0 +1,22 @@
+running develop
+running egg_info
+creating py_bus_bringup.egg-info
+writing py_bus_bringup.egg-info/PKG-INFO
+writing dependency_links to py_bus_bringup.egg-info/dependency_links.txt
+writing requirements to py_bus_bringup.egg-info/requires.txt
+writing top-level names to py_bus_bringup.egg-info/top_level.txt
+writing manifest file 'py_bus_bringup.egg-info/SOURCES.txt'
+reading manifest file 'py_bus_bringup.egg-info/SOURCES.txt'
+writing manifest file 'py_bus_bringup.egg-info/SOURCES.txt'
+running build_ext
+Creating /home/admin/ros2_bus/install/py_bus_bringup/lib/python3.12/site-packages/py-bus-bringup.egg-link (link to .)
+
+Installed /home/admin/ros2_bus/build/py_bus_bringup
+running symlink_data
+creating /home/admin/ros2_bus/install/py_bus_bringup/share/ament_index
+creating /home/admin/ros2_bus/install/py_bus_bringup/share/ament_index/resource_index
+creating /home/admin/ros2_bus/install/py_bus_bringup/share/ament_index/resource_index/packages
+symbolically linking /home/admin/ros2_bus/build/py_bus_bringup/resource/py_bus_bringup -> /home/admin/ros2_bus/install/py_bus_bringup/share/ament_index/resource_index/packages
+symbolically linking /home/admin/ros2_bus/build/py_bus_bringup/package.xml -> /home/admin/ros2_bus/install/py_bus_bringup/share/py_bus_bringup
+creating /home/admin/ros2_bus/install/py_bus_bringup/share/py_bus_bringup/launch
+symbolically linking /home/admin/ros2_bus/build/py_bus_bringup/launch/bringup.launch.py -> /home/admin/ros2_bus/install/py_bus_bringup/share/py_bus_bringup/launch

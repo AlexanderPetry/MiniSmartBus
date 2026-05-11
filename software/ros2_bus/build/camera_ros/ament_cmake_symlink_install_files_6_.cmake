@@ -1,0 +1,1 @@
+ament_cmake_symlink_install_files("/home/admin/ros2_bus/src/camera_ros" FILES "/opt/ros/kilted/share/ament_cmake_core/cmake/environment_hooks/environment/path.sh" "DESTINATION" "share/camera_ros/environment")

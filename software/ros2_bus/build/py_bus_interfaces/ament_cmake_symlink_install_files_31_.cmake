@@ -1,0 +1,1 @@
+ament_cmake_symlink_install_files("/home/admin/ros2_bus/src/py_bus_interfaces" FILES "/home/admin/ros2_bus/build/py_bus_interfaces/ament_cmake_export_dependencies/ament_cmake_export_dependencies-extras.cmake" "DESTINATION" "share/py_bus_interfaces/cmake")

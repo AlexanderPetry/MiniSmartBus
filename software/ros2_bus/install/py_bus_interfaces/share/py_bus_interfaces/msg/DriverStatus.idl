@@ -1,0 +1,33 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from py_bus_interfaces/msg/DriverStatus.msg
+// generated code does not contain a copyright notice
+
+#include "builtin_interfaces/msg/Time.idl"
+
+module py_bus_interfaces {
+  module msg {
+    struct DriverStatus {
+      builtin_interfaces::msg::Time stamp;
+
+      string source;
+
+      int32 rc_steering_us;
+
+      int32 rc_throttle_us;
+
+      float commanded_speed_kmh;
+
+      float commanded_steering_deg;
+
+      float applied_speed_kmh;
+
+      float applied_steering_deg;
+
+      float batt_voltage;
+
+      float batt_pct;
+
+      string raw_line;
+    };
+  };
+};

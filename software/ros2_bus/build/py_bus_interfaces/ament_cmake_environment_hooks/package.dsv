@@ -1,0 +1,4 @@
+source;share/py_bus_interfaces/local_setup.bash
+source;share/py_bus_interfaces/local_setup.dsv
+source;share/py_bus_interfaces/local_setup.sh
+source;share/py_bus_interfaces/local_setup.zsh

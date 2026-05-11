@@ -1,0 +1,3 @@
+[console_scripts]
+imu_node = py_bus_localisation_hw.imu_node:main
+uwb_node = py_bus_localisation_hw.uwb_node:main

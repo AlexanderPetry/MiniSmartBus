@@ -1,0 +1,2 @@
+[console_scripts]
+web_visu_node = py_bus_hmi.web_visu_node:main

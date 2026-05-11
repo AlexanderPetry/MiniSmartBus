@@ -1,0 +1,4 @@
+[console_scripts]
+cmd_vel_to_ackermann = py_bus_driver.cmd_vel_to_ackermann:main
+drive_mode_arbiter = py_bus_driver.drive_mode_arbiter:main
+driver_node = py_bus_driver.driver_node:main

@@ -1,0 +1,25 @@
+[2.411s] Invoking command in '/home/admin/ros2_bus/build/py_bus_localisation_logic': PYTHONPATH=/home/admin/ros2_bus/build/py_bus_localisation_logic/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/admin/ros2_bus/install/py_bus_localisation_logic/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/admin/ros2_bus/build/py_bus_localisation_logic/build --no-deps symlink_data
+[3.302s] running develop
+[3.996s] running egg_info
+[3.996s] creating py_bus_localisation_logic.egg-info
+[4.042s] writing py_bus_localisation_logic.egg-info/PKG-INFO
+[4.043s] writing dependency_links to py_bus_localisation_logic.egg-info/dependency_links.txt
+[4.043s] writing entry points to py_bus_localisation_logic.egg-info/entry_points.txt
+[4.043s] writing requirements to py_bus_localisation_logic.egg-info/requires.txt
+[4.044s] writing top-level names to py_bus_localisation_logic.egg-info/top_level.txt
+[4.044s] writing manifest file 'py_bus_localisation_logic.egg-info/SOURCES.txt'
+[4.150s] reading manifest file 'py_bus_localisation_logic.egg-info/SOURCES.txt'
+[4.154s] writing manifest file 'py_bus_localisation_logic.egg-info/SOURCES.txt'
+[4.210s] running build_ext
+[4.211s] Creating /home/admin/ros2_bus/install/py_bus_localisation_logic/lib/python3.12/site-packages/py-bus-localisation-logic.egg-link (link to .)
+[4.213s] Installing pose_estimator script to /home/admin/ros2_bus/install/py_bus_localisation_logic/lib/py_bus_localisation_logic
+[4.213s] Installing uwb_map_bridge script to /home/admin/ros2_bus/install/py_bus_localisation_logic/lib/py_bus_localisation_logic
+[4.215s] 
+[4.215s] Installed /home/admin/ros2_bus/build/py_bus_localisation_logic
+[4.215s] running symlink_data
+[4.216s] creating /home/admin/ros2_bus/install/py_bus_localisation_logic/share/ament_index
+[4.217s] creating /home/admin/ros2_bus/install/py_bus_localisation_logic/share/ament_index/resource_index
+[4.217s] creating /home/admin/ros2_bus/install/py_bus_localisation_logic/share/ament_index/resource_index/packages
+[4.218s] symbolically linking /home/admin/ros2_bus/build/py_bus_localisation_logic/resource/py_bus_localisation_logic -> /home/admin/ros2_bus/install/py_bus_localisation_logic/share/ament_index/resource_index/packages
+[4.218s] symbolically linking /home/admin/ros2_bus/build/py_bus_localisation_logic/package.xml -> /home/admin/ros2_bus/install/py_bus_localisation_logic/share/py_bus_localisation_logic
+[4.424s] Invoked command in '/home/admin/ros2_bus/build/py_bus_localisation_logic' returned '0': PYTHONPATH=/home/admin/ros2_bus/build/py_bus_localisation_logic/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/admin/ros2_bus/install/py_bus_localisation_logic/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/admin/ros2_bus/build/py_bus_localisation_logic/build --no-deps symlink_data

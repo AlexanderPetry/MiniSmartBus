@@ -1,0 +1,1 @@
+ament_cmake_symlink_install_files("/home/admin/ros2_bus/src/camera_ros" FILES "/home/admin/ros2_bus/build/camera_ros/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/camera_ros" "DESTINATION" "share/ament_index/resource_index/package_run_dependencies")

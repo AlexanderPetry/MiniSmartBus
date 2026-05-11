@@ -1,0 +1,23 @@
+running develop
+running egg_info
+creating py_bus_localisation_hw.egg-info
+writing py_bus_localisation_hw.egg-info/PKG-INFO
+writing dependency_links to py_bus_localisation_hw.egg-info/dependency_links.txt
+writing entry points to py_bus_localisation_hw.egg-info/entry_points.txt
+writing requirements to py_bus_localisation_hw.egg-info/requires.txt
+writing top-level names to py_bus_localisation_hw.egg-info/top_level.txt
+writing manifest file 'py_bus_localisation_hw.egg-info/SOURCES.txt'
+reading manifest file 'py_bus_localisation_hw.egg-info/SOURCES.txt'
+writing manifest file 'py_bus_localisation_hw.egg-info/SOURCES.txt'
+running build_ext
+Creating /home/admin/ros2_bus/install/py_bus_localisation_hw/lib/python3.12/site-packages/py-bus-localisation-hw.egg-link (link to .)
+Installing imu_node script to /home/admin/ros2_bus/install/py_bus_localisation_hw/lib/py_bus_localisation_hw
+Installing uwb_node script to /home/admin/ros2_bus/install/py_bus_localisation_hw/lib/py_bus_localisation_hw
+
+Installed /home/admin/ros2_bus/build/py_bus_localisation_hw
+running symlink_data
+creating /home/admin/ros2_bus/install/py_bus_localisation_hw/share/ament_index
+creating /home/admin/ros2_bus/install/py_bus_localisation_hw/share/ament_index/resource_index
+creating /home/admin/ros2_bus/install/py_bus_localisation_hw/share/ament_index/resource_index/packages
+symbolically linking /home/admin/ros2_bus/build/py_bus_localisation_hw/resource/py_bus_localisation_hw -> /home/admin/ros2_bus/install/py_bus_localisation_hw/share/ament_index/resource_index/packages
+symbolically linking /home/admin/ros2_bus/build/py_bus_localisation_hw/package.xml -> /home/admin/ros2_bus/install/py_bus_localisation_hw/share/py_bus_localisation_hw

@@ -1,0 +1,22 @@
+[2.925s] Invoking command in '/home/admin/ros2_bus/build/py_bus_controller': PYTHONPATH=/home/admin/ros2_bus/build/py_bus_controller/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/admin/ros2_bus/install/py_bus_controller/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/admin/ros2_bus/build/py_bus_controller/build --no-deps symlink_data
+[3.860s] running develop
+[4.414s] running egg_info
+[4.414s] creating py_bus_controller.egg-info
+[4.477s] writing py_bus_controller.egg-info/PKG-INFO
+[4.477s] writing dependency_links to py_bus_controller.egg-info/dependency_links.txt
+[4.478s] writing requirements to py_bus_controller.egg-info/requires.txt
+[4.478s] writing top-level names to py_bus_controller.egg-info/top_level.txt
+[4.478s] writing manifest file 'py_bus_controller.egg-info/SOURCES.txt'
+[4.598s] reading manifest file 'py_bus_controller.egg-info/SOURCES.txt'
+[4.603s] writing manifest file 'py_bus_controller.egg-info/SOURCES.txt'
+[4.649s] running build_ext
+[4.649s] Creating /home/admin/ros2_bus/install/py_bus_controller/lib/python3.12/site-packages/py-bus-controller.egg-link (link to .)
+[4.650s] 
+[4.650s] Installed /home/admin/ros2_bus/build/py_bus_controller
+[4.650s] running symlink_data
+[4.650s] creating /home/admin/ros2_bus/install/py_bus_controller/share/ament_index
+[4.650s] creating /home/admin/ros2_bus/install/py_bus_controller/share/ament_index/resource_index
+[4.650s] creating /home/admin/ros2_bus/install/py_bus_controller/share/ament_index/resource_index/packages
+[4.650s] symbolically linking /home/admin/ros2_bus/build/py_bus_controller/resource/py_bus_controller -> /home/admin/ros2_bus/install/py_bus_controller/share/ament_index/resource_index/packages
+[4.651s] symbolically linking /home/admin/ros2_bus/build/py_bus_controller/package.xml -> /home/admin/ros2_bus/install/py_bus_controller/share/py_bus_controller
+[4.829s] Invoked command in '/home/admin/ros2_bus/build/py_bus_controller' returned '0': PYTHONPATH=/home/admin/ros2_bus/build/py_bus_controller/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/admin/ros2_bus/install/py_bus_controller/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/admin/ros2_bus/build/py_bus_controller/build --no-deps symlink_data

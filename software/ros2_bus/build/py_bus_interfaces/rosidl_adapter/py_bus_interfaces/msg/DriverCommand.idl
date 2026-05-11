@@ -1,0 +1,14 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from py_bus_interfaces/msg/DriverCommand.msg
+// generated code does not contain a copyright notice
+
+
+module py_bus_interfaces {
+  module msg {
+    struct DriverCommand {
+      float speed_kmh;
+
+      float steering_deg;
+    };
+  };
+};

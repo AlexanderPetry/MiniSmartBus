@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>py_bus HMI</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <main>
+    <header class="page-header">
+      <div>
+        <h1>py_bus sensor view</h1>
+        <p class="page-subtitle">Vehicle telemetry, driver control, and live perception</p>
+      </div>
+
+      <nav class="page-nav" aria-label="Main navigation">
+        <a class="nav-button" href="/navigation">Open navigation</a>
+      </nav>
+    </header>
+
+    <section class="card">
+      <h2>Driver control</h2>
+
+      <div class="control-group">
+        <label for="speed-slider">Speed</label>
+        <input
+          id="speed-slider"
+          type="range"
+          min="-4"
+          max="4"
+          step="0.1"
+          value="0">
+        <div class="slider-value" id="speed-value">0.00 km/h</div>
+      </div>
+
+      <div class="control-group">
+        <label for="steering-slider">Steering</label>
+        <input
+          id="steering-slider"
+          type="range"
+          min="-35"
+          max="35"
+          step="1"
+          value="0">
+        <div class="slider-value" id="steering-value">0.0 deg</div>
+      </div>
+
+      <p id="command-state">no command sent yet</p>
+    </section>
+
+    <section class="card">
+      <h2>Driver status</h2>
+      <pre id="driver">waiting for driver status...</pre>
+    </section>
+
+    <section class="card">
+      <h2>Last command</h2>
+      <pre id="last-command">waiting for command data...</pre>
+    </section>
+
+    <section class="card">
+      <h2>Camera detections</h2>
+      <img id="camera-feed" src="/video_feed" alt="Live camera feed with detections">
+    </section>
+
+    <section class="card">
+      <h2>IMU</h2>
+      <pre id="imu">waiting for imu data...</pre>
+    </section>
+
+    <section class="card">
+      <h2>UWB</h2>
+      <pre id="uwb">waiting for uwb data...</pre>
+    </section>
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+</html>

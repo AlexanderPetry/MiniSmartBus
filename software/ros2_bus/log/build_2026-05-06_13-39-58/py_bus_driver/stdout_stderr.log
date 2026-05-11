@@ -1,0 +1,24 @@
+running develop
+running egg_info
+creating py_bus_driver.egg-info
+writing py_bus_driver.egg-info/PKG-INFO
+writing dependency_links to py_bus_driver.egg-info/dependency_links.txt
+writing entry points to py_bus_driver.egg-info/entry_points.txt
+writing requirements to py_bus_driver.egg-info/requires.txt
+writing top-level names to py_bus_driver.egg-info/top_level.txt
+writing manifest file 'py_bus_driver.egg-info/SOURCES.txt'
+reading manifest file 'py_bus_driver.egg-info/SOURCES.txt'
+writing manifest file 'py_bus_driver.egg-info/SOURCES.txt'
+running build_ext
+Creating /home/admin/ros2_bus/install/py_bus_driver/lib/python3.12/site-packages/py-bus-driver.egg-link (link to .)
+Installing cmd_vel_to_ackermann script to /home/admin/ros2_bus/install/py_bus_driver/lib/py_bus_driver
+Installing drive_mode_arbiter script to /home/admin/ros2_bus/install/py_bus_driver/lib/py_bus_driver
+Installing driver_node script to /home/admin/ros2_bus/install/py_bus_driver/lib/py_bus_driver
+
+Installed /home/admin/ros2_bus/build/py_bus_driver
+running symlink_data
+creating /home/admin/ros2_bus/install/py_bus_driver/share/ament_index
+creating /home/admin/ros2_bus/install/py_bus_driver/share/ament_index/resource_index
+creating /home/admin/ros2_bus/install/py_bus_driver/share/ament_index/resource_index/packages
+symbolically linking /home/admin/ros2_bus/build/py_bus_driver/resource/py_bus_driver -> /home/admin/ros2_bus/install/py_bus_driver/share/ament_index/resource_index/packages
+symbolically linking /home/admin/ros2_bus/build/py_bus_driver/package.xml -> /home/admin/ros2_bus/install/py_bus_driver/share/py_bus_driver

@@ -1,0 +1,8 @@
+Metadata-Version: 2.1
+Name: py-bus-bringup
+Version: 0.0.0
+Summary: TODO: Package description
+Maintainer: admin
+Maintainer-email: admin@todo.todo
+License: Apache-2.0
+Provides-Extra: test

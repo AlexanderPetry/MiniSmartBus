@@ -1,0 +1,65 @@
+// generated from rosidl_typesupport_fastrtps_c/resource/idl__rosidl_typesupport_fastrtps_c.h.em
+// with input from py_bus_interfaces:msg/DriverCommand.idl
+// generated code does not contain a copyright notice
+#ifndef PY_BUS_INTERFACES__MSG__DETAIL__DRIVER_COMMAND__ROSIDL_TYPESUPPORT_FASTRTPS_C_H_
+#define PY_BUS_INTERFACES__MSG__DETAIL__DRIVER_COMMAND__ROSIDL_TYPESUPPORT_FASTRTPS_C_H_
+
+
+#include <stddef.h>
+#include "rosidl_runtime_c/message_type_support_struct.h"
+#include "rosidl_typesupport_interface/macros.h"
+#include "py_bus_interfaces/msg/rosidl_typesupport_fastrtps_c__visibility_control.h"
+#include "py_bus_interfaces/msg/detail/driver_command__struct.h"
+#include "fastcdr/Cdr.h"
+
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
+ROSIDL_TYPESUPPORT_FASTRTPS_C_PUBLIC_py_bus_interfaces
+bool cdr_serialize_py_bus_interfaces__msg__DriverCommand(
+  const py_bus_interfaces__msg__DriverCommand * ros_message,
+  eprosima::fastcdr::Cdr & cdr);
+
+ROSIDL_TYPESUPPORT_FASTRTPS_C_PUBLIC_py_bus_interfaces
+bool cdr_deserialize_py_bus_interfaces__msg__DriverCommand(
+  eprosima::fastcdr::Cdr &,
+  py_bus_interfaces__msg__DriverCommand * ros_message);
+
+ROSIDL_TYPESUPPORT_FASTRTPS_C_PUBLIC_py_bus_interfaces
+size_t get_serialized_size_py_bus_interfaces__msg__DriverCommand(
+  const void * untyped_ros_message,
+  size_t current_alignment);
+
+ROSIDL_TYPESUPPORT_FASTRTPS_C_PUBLIC_py_bus_interfaces
+size_t max_serialized_size_py_bus_interfaces__msg__DriverCommand(
+  bool & full_bounded,
+  bool & is_plain,
+  size_t current_alignment);
+
+ROSIDL_TYPESUPPORT_FASTRTPS_C_PUBLIC_py_bus_interfaces
+bool cdr_serialize_key_py_bus_interfaces__msg__DriverCommand(
+  const py_bus_interfaces__msg__DriverCommand * ros_message,
+  eprosima::fastcdr::Cdr & cdr);
+
+ROSIDL_TYPESUPPORT_FASTRTPS_C_PUBLIC_py_bus_interfaces
+size_t get_serialized_size_key_py_bus_interfaces__msg__DriverCommand(
+  const void * untyped_ros_message,
+  size_t current_alignment);
+
+ROSIDL_TYPESUPPORT_FASTRTPS_C_PUBLIC_py_bus_interfaces
+size_t max_serialized_size_key_py_bus_interfaces__msg__DriverCommand(
+  bool & full_bounded,
+  bool & is_plain,
+  size_t current_alignment);
+
+ROSIDL_TYPESUPPORT_FASTRTPS_C_PUBLIC_py_bus_interfaces
+const rosidl_message_type_support_t *
+ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_fastrtps_c, py_bus_interfaces, msg, DriverCommand)();
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif  // PY_BUS_INTERFACES__MSG__DETAIL__DRIVER_COMMAND__ROSIDL_TYPESUPPORT_FASTRTPS_C_H_

@@ -1,0 +1,1 @@
+ament_cmake_symlink_install_files("/home/admin/ros2_bus/src/py_bus_interfaces" FILES "/home/admin/ros2_bus/build/py_bus_interfaces/rosidl_adapter/py_bus_interfaces/msg/ImuData.idl" "DESTINATION" "share/py_bus_interfaces/msg")

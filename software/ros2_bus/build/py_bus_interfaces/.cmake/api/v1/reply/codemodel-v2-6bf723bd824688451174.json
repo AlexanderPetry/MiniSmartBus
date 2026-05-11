@@ -1,0 +1,267 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						2
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-350ac62751e74d8bf00e.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						15,
+						16,
+						17,
+						18,
+						19
+					]
+				},
+				{
+					"build" : "py_bus_interfaces__py",
+					"jsonFile" : "directory-py_bus_interfaces__py-0a7021c7082f4112f5b1.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "/home/admin/ros2_bus/build/py_bus_interfaces/py_bus_interfaces__py",
+					"targetIndexes" : 
+					[
+						4
+					]
+				},
+				{
+					"build" : "py_bus_interfaces__rs",
+					"jsonFile" : "directory-py_bus_interfaces__rs-b833a9495a3b66f356e1.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "/home/admin/ros2_bus/build/py_bus_interfaces/py_bus_interfaces__rs",
+					"targetIndexes" : 
+					[
+						14
+					]
+				}
+			],
+			"name" : "",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0,
+						1,
+						2
+					],
+					"name" : "py_bus_interfaces",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16,
+						17,
+						18,
+						19
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "ament_cmake_python_build_py_bus_interfaces_egg::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ament_cmake_python_build_py_bus_interfaces_egg-35bcc442d8d330ad4076.json",
+					"name" : "ament_cmake_python_build_py_bus_interfaces_egg",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ament_cmake_python_symlink_py_bus_interfaces::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ament_cmake_python_symlink_py_bus_interfaces-fcf6cc53e04c201a98b9.json",
+					"name" : "ament_cmake_python_symlink_py_bus_interfaces",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "py_bus_interfaces::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-py_bus_interfaces-ef28ccc805ee048a6028.json",
+					"name" : "py_bus_interfaces",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "py_bus_interfaces__cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-py_bus_interfaces__cpp-2cd3eb41575f1b8e3993.json",
+					"name" : "py_bus_interfaces__cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "py_bus_interfaces__py::@37f2797e5259005186f8",
+					"jsonFile" : "target-py_bus_interfaces__py-3ec2a90e5607dcf03fad.json",
+					"name" : "py_bus_interfaces__py",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "py_bus_interfaces__rosidl_generator_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-py_bus_interfaces__rosidl_generator_c-e5ef115e54772e417d8f.json",
+					"name" : "py_bus_interfaces__rosidl_generator_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "py_bus_interfaces__rosidl_generator_py::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-py_bus_interfaces__rosidl_generator_py-e8fc567079c4522908d4.json",
+					"name" : "py_bus_interfaces__rosidl_generator_py",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "py_bus_interfaces__rosidl_generator_type_description::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-py_bus_interfaces__rosidl_generator_type_description-41bc034c81a9e131ab68.json",
+					"name" : "py_bus_interfaces__rosidl_generator_type_description",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "py_bus_interfaces__rosidl_typesupport_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-py_bus_interfaces__rosidl_typesupport_c-904ba239e94aafc6d5f5.json",
+					"name" : "py_bus_interfaces__rosidl_typesupport_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "py_bus_interfaces__rosidl_typesupport_cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-py_bus_interfaces__rosidl_typesupport_cpp-e1f0b40b6240e9a6f2f6.json",
+					"name" : "py_bus_interfaces__rosidl_typesupport_cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "py_bus_interfaces__rosidl_typesupport_fastrtps_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-py_bus_interfaces__rosidl_typesupport_fastrtps_c-e0eb96ff5092c3da627f.json",
+					"name" : "py_bus_interfaces__rosidl_typesupport_fastrtps_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "py_bus_interfaces__rosidl_typesupport_fastrtps_cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-py_bus_interfaces__rosidl_typesupport_fastrtps_cpp-8277a1b5204cff6c257a.json",
+					"name" : "py_bus_interfaces__rosidl_typesupport_fastrtps_cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "py_bus_interfaces__rosidl_typesupport_introspection_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-py_bus_interfaces__rosidl_typesupport_introspection_c-509709dfefc65f1ac5c3.json",
+					"name" : "py_bus_interfaces__rosidl_typesupport_introspection_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "py_bus_interfaces__rosidl_typesupport_introspection_cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-py_bus_interfaces__rosidl_typesupport_introspection_cpp-1c14b94315abff556090.json",
+					"name" : "py_bus_interfaces__rosidl_typesupport_introspection_cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "py_bus_interfaces__rs::@aafe6a4cb127b8e7f2c3",
+					"jsonFile" : "target-py_bus_interfaces__rs-86a47aacae85159efd5c.json",
+					"name" : "py_bus_interfaces__rs",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "py_bus_interfaces_s__rosidl_typesupport_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-py_bus_interfaces_s__rosidl_typesupport_c-24749ba57654cb7e7506.json",
+					"name" : "py_bus_interfaces_s__rosidl_typesupport_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "py_bus_interfaces_s__rosidl_typesupport_fastrtps_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-py_bus_interfaces_s__rosidl_typesupport_fastrtps_c-bc3b3dc51a594168049a.json",
+					"name" : "py_bus_interfaces_s__rosidl_typesupport_fastrtps_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "py_bus_interfaces_s__rosidl_typesupport_introspection_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-py_bus_interfaces_s__rosidl_typesupport_introspection_c-ed4ba054c5f8a2da46fd.json",
+					"name" : "py_bus_interfaces_s__rosidl_typesupport_introspection_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "py_bus_interfaces_uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-py_bus_interfaces_uninstall-5f8729ccb16b71f0126a.json",
+					"name" : "py_bus_interfaces_uninstall",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uninstall-92a7fbcaae20c68c1f6d.json",
+					"name" : "uninstall",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/admin/ros2_bus/build/py_bus_interfaces",
+		"source" : "/home/admin/ros2_bus/src/py_bus_interfaces"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}

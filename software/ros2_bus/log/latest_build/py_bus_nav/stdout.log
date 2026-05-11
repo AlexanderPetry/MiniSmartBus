@@ -1,0 +1,27 @@
+running develop
+running egg_info
+creating py_bus_nav.egg-info
+writing py_bus_nav.egg-info/PKG-INFO
+writing dependency_links to py_bus_nav.egg-info/dependency_links.txt
+writing requirements to py_bus_nav.egg-info/requires.txt
+writing top-level names to py_bus_nav.egg-info/top_level.txt
+writing manifest file 'py_bus_nav.egg-info/SOURCES.txt'
+reading manifest file 'py_bus_nav.egg-info/SOURCES.txt'
+writing manifest file 'py_bus_nav.egg-info/SOURCES.txt'
+running build_ext
+Creating /home/admin/ros2_bus/install/py_bus_nav/lib/python3.12/site-packages/py-bus-nav.egg-link (link to .)
+
+Installed /home/admin/ros2_bus/build/py_bus_nav
+running symlink_data
+creating /home/admin/ros2_bus/install/py_bus_nav/share/ament_index
+creating /home/admin/ros2_bus/install/py_bus_nav/share/ament_index/resource_index
+creating /home/admin/ros2_bus/install/py_bus_nav/share/ament_index/resource_index/packages
+symbolically linking /home/admin/ros2_bus/build/py_bus_nav/resource/py_bus_nav -> /home/admin/ros2_bus/install/py_bus_nav/share/ament_index/resource_index/packages
+symbolically linking /home/admin/ros2_bus/build/py_bus_nav/package.xml -> /home/admin/ros2_bus/install/py_bus_nav/share/py_bus_nav
+creating /home/admin/ros2_bus/install/py_bus_nav/share/py_bus_nav/launch
+symbolically linking /home/admin/ros2_bus/build/py_bus_nav/launch/planning_only.launch.py -> /home/admin/ros2_bus/install/py_bus_nav/share/py_bus_nav/launch
+creating /home/admin/ros2_bus/install/py_bus_nav/share/py_bus_nav/config
+symbolically linking /home/admin/ros2_bus/build/py_bus_nav/config/nav2_params.yaml -> /home/admin/ros2_bus/install/py_bus_nav/share/py_bus_nav/config
+creating /home/admin/ros2_bus/install/py_bus_nav/share/py_bus_nav/maps
+symbolically linking /home/admin/ros2_bus/build/py_bus_nav/maps/empty_map.yaml -> /home/admin/ros2_bus/install/py_bus_nav/share/py_bus_nav/maps
+symbolically linking /home/admin/ros2_bus/build/py_bus_nav/maps/empty_map.pgm -> /home/admin/ros2_bus/install/py_bus_nav/share/py_bus_nav/maps

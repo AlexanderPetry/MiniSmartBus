@@ -1,0 +1,2 @@
+float32 speed_kmh
+float32 steering_deg

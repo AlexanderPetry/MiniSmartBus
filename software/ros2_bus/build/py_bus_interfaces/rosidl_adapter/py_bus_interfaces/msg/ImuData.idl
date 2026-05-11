@@ -1,0 +1,26 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from py_bus_interfaces/msg/ImuData.msg
+// generated code does not contain a copyright notice
+
+
+module py_bus_interfaces {
+  module msg {
+    struct ImuData {
+      int32 sample_id;
+
+      float accel_x;
+
+      float accel_y;
+
+      float accel_z;
+
+      float temp;
+
+      float gyro_x;
+
+      float gyro_y;
+
+      float gyro_z;
+    };
+  };
+};

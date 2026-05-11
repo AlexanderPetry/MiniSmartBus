@@ -1,0 +1,1 @@
+ament_cmake_symlink_install_files("/home/admin/ros2_bus/src/py_bus_interfaces" FILES "/home/admin/ros2_bus/build/py_bus_interfaces/ament_cmake_index/share/ament_index/resource_index/parent_prefix_path/py_bus_interfaces" "DESTINATION" "share/ament_index/resource_index/parent_prefix_path")

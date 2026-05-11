@@ -1,0 +1,13 @@
+{
+  "package_name": "py_bus_interfaces",
+  "output_dir": "/home/admin/ros2_bus/build/py_bus_interfaces/rosidl_generator_type_description/py_bus_interfaces",
+  "idl_tuples": [
+    "/home/admin/ros2_bus/build/py_bus_interfaces/rosidl_adapter/py_bus_interfaces:msg/ImuData.idl",
+    "/home/admin/ros2_bus/build/py_bus_interfaces/rosidl_adapter/py_bus_interfaces:msg/UwbData.idl",
+    "/home/admin/ros2_bus/build/py_bus_interfaces/rosidl_adapter/py_bus_interfaces:msg/DriverStatus.idl",
+    "/home/admin/ros2_bus/build/py_bus_interfaces/rosidl_adapter/py_bus_interfaces:msg/DriverCommand.idl"
+  ],
+  "include_paths": [
+    "builtin_interfaces:/opt/ros/kilted/share/builtin_interfaces"
+  ]
+}

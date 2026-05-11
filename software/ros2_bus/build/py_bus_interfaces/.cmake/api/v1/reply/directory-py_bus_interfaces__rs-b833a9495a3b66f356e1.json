@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "py_bus_interfaces__rs",
+		"source" : "/home/admin/ros2_bus/build/py_bus_interfaces/py_bus_interfaces__rs"
+	}
+}

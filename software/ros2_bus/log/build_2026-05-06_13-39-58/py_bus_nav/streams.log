@@ -1,0 +1,29 @@
+[2.627s] Invoking command in '/home/admin/ros2_bus/build/py_bus_nav': PYTHONPATH=/home/admin/ros2_bus/build/py_bus_nav/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/admin/ros2_bus/install/py_bus_nav/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/admin/ros2_bus/build/py_bus_nav/build --no-deps symlink_data
+[3.643s] running develop
+[4.236s] running egg_info
+[4.238s] creating py_bus_nav.egg-info
+[4.289s] writing py_bus_nav.egg-info/PKG-INFO
+[4.290s] writing dependency_links to py_bus_nav.egg-info/dependency_links.txt
+[4.290s] writing requirements to py_bus_nav.egg-info/requires.txt
+[4.290s] writing top-level names to py_bus_nav.egg-info/top_level.txt
+[4.293s] writing manifest file 'py_bus_nav.egg-info/SOURCES.txt'
+[4.407s] reading manifest file 'py_bus_nav.egg-info/SOURCES.txt'
+[4.408s] writing manifest file 'py_bus_nav.egg-info/SOURCES.txt'
+[4.464s] running build_ext
+[4.464s] Creating /home/admin/ros2_bus/install/py_bus_nav/lib/python3.12/site-packages/py-bus-nav.egg-link (link to .)
+[4.465s] 
+[4.465s] Installed /home/admin/ros2_bus/build/py_bus_nav
+[4.466s] running symlink_data
+[4.466s] creating /home/admin/ros2_bus/install/py_bus_nav/share/ament_index
+[4.466s] creating /home/admin/ros2_bus/install/py_bus_nav/share/ament_index/resource_index
+[4.466s] creating /home/admin/ros2_bus/install/py_bus_nav/share/ament_index/resource_index/packages
+[4.466s] symbolically linking /home/admin/ros2_bus/build/py_bus_nav/resource/py_bus_nav -> /home/admin/ros2_bus/install/py_bus_nav/share/ament_index/resource_index/packages
+[4.466s] symbolically linking /home/admin/ros2_bus/build/py_bus_nav/package.xml -> /home/admin/ros2_bus/install/py_bus_nav/share/py_bus_nav
+[4.466s] creating /home/admin/ros2_bus/install/py_bus_nav/share/py_bus_nav/launch
+[4.467s] symbolically linking /home/admin/ros2_bus/build/py_bus_nav/launch/planning_only.launch.py -> /home/admin/ros2_bus/install/py_bus_nav/share/py_bus_nav/launch
+[4.467s] creating /home/admin/ros2_bus/install/py_bus_nav/share/py_bus_nav/config
+[4.467s] symbolically linking /home/admin/ros2_bus/build/py_bus_nav/config/nav2_params.yaml -> /home/admin/ros2_bus/install/py_bus_nav/share/py_bus_nav/config
+[4.467s] creating /home/admin/ros2_bus/install/py_bus_nav/share/py_bus_nav/maps
+[4.467s] symbolically linking /home/admin/ros2_bus/build/py_bus_nav/maps/empty_map.yaml -> /home/admin/ros2_bus/install/py_bus_nav/share/py_bus_nav/maps
+[4.467s] symbolically linking /home/admin/ros2_bus/build/py_bus_nav/maps/empty_map.pgm -> /home/admin/ros2_bus/install/py_bus_nav/share/py_bus_nav/maps
+[4.643s] Invoked command in '/home/admin/ros2_bus/build/py_bus_nav' returned '0': PYTHONPATH=/home/admin/ros2_bus/build/py_bus_nav/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/admin/ros2_bus/install/py_bus_nav/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/admin/ros2_bus/build/py_bus_nav/build --no-deps symlink_data

@@ -1,0 +1,22 @@
+[2.639s] Invoking command in '/home/admin/ros2_bus/build/py_bus_perception_hw': PYTHONPATH=/home/admin/ros2_bus/build/py_bus_perception_hw/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/admin/ros2_bus/install/py_bus_perception_hw/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/admin/ros2_bus/build/py_bus_perception_hw/build --no-deps symlink_data
+[3.547s] running develop
+[4.254s] running egg_info
+[4.254s] creating py_bus_perception_hw.egg-info
+[4.313s] writing py_bus_perception_hw.egg-info/PKG-INFO
+[4.313s] writing dependency_links to py_bus_perception_hw.egg-info/dependency_links.txt
+[4.315s] writing requirements to py_bus_perception_hw.egg-info/requires.txt
+[4.315s] writing top-level names to py_bus_perception_hw.egg-info/top_level.txt
+[4.315s] writing manifest file 'py_bus_perception_hw.egg-info/SOURCES.txt'
+[4.430s] reading manifest file 'py_bus_perception_hw.egg-info/SOURCES.txt'
+[4.432s] writing manifest file 'py_bus_perception_hw.egg-info/SOURCES.txt'
+[4.498s] running build_ext
+[4.499s] Creating /home/admin/ros2_bus/install/py_bus_perception_hw/lib/python3.12/site-packages/py-bus-perception-hw.egg-link (link to .)
+[4.499s] 
+[4.499s] Installed /home/admin/ros2_bus/build/py_bus_perception_hw
+[4.499s] running symlink_data
+[4.500s] creating /home/admin/ros2_bus/install/py_bus_perception_hw/share/ament_index
+[4.500s] creating /home/admin/ros2_bus/install/py_bus_perception_hw/share/ament_index/resource_index
+[4.500s] creating /home/admin/ros2_bus/install/py_bus_perception_hw/share/ament_index/resource_index/packages
+[4.500s] symbolically linking /home/admin/ros2_bus/build/py_bus_perception_hw/resource/py_bus_perception_hw -> /home/admin/ros2_bus/install/py_bus_perception_hw/share/ament_index/resource_index/packages
+[4.500s] symbolically linking /home/admin/ros2_bus/build/py_bus_perception_hw/package.xml -> /home/admin/ros2_bus/install/py_bus_perception_hw/share/py_bus_perception_hw
+[4.709s] Invoked command in '/home/admin/ros2_bus/build/py_bus_perception_hw' returned '0': PYTHONPATH=/home/admin/ros2_bus/build/py_bus_perception_hw/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/admin/ros2_bus/install/py_bus_perception_hw/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/admin/ros2_bus/build/py_bus_perception_hw/build --no-deps symlink_data

@@ -1,0 +1,28 @@
+running develop
+running egg_info
+creating py_bus_hmi.egg-info
+writing py_bus_hmi.egg-info/PKG-INFO
+writing dependency_links to py_bus_hmi.egg-info/dependency_links.txt
+writing entry points to py_bus_hmi.egg-info/entry_points.txt
+writing requirements to py_bus_hmi.egg-info/requires.txt
+writing top-level names to py_bus_hmi.egg-info/top_level.txt
+writing manifest file 'py_bus_hmi.egg-info/SOURCES.txt'
+reading manifest file 'py_bus_hmi.egg-info/SOURCES.txt'
+writing manifest file 'py_bus_hmi.egg-info/SOURCES.txt'
+running build_ext
+Creating /home/admin/ros2_bus/install/py_bus_hmi/lib/python3.12/site-packages/py-bus-hmi.egg-link (link to .)
+Installing web_visu_node script to /home/admin/ros2_bus/install/py_bus_hmi/lib/py_bus_hmi
+
+Installed /home/admin/ros2_bus/build/py_bus_hmi
+running symlink_data
+creating /home/admin/ros2_bus/install/py_bus_hmi/share/ament_index
+creating /home/admin/ros2_bus/install/py_bus_hmi/share/ament_index/resource_index
+creating /home/admin/ros2_bus/install/py_bus_hmi/share/ament_index/resource_index/packages
+symbolically linking /home/admin/ros2_bus/build/py_bus_hmi/resource/py_bus_hmi -> /home/admin/ros2_bus/install/py_bus_hmi/share/ament_index/resource_index/packages
+symbolically linking /home/admin/ros2_bus/build/py_bus_hmi/package.xml -> /home/admin/ros2_bus/install/py_bus_hmi/share/py_bus_hmi
+creating /home/admin/ros2_bus/install/py_bus_hmi/share/py_bus_hmi/web
+symbolically linking /home/admin/ros2_bus/build/py_bus_hmi/py_bus_hmi/web/index.html -> /home/admin/ros2_bus/install/py_bus_hmi/share/py_bus_hmi/web
+symbolically linking /home/admin/ros2_bus/build/py_bus_hmi/py_bus_hmi/web/style.css -> /home/admin/ros2_bus/install/py_bus_hmi/share/py_bus_hmi/web
+symbolically linking /home/admin/ros2_bus/build/py_bus_hmi/py_bus_hmi/web/navigation.html -> /home/admin/ros2_bus/install/py_bus_hmi/share/py_bus_hmi/web
+symbolically linking /home/admin/ros2_bus/build/py_bus_hmi/py_bus_hmi/web/navigation.js -> /home/admin/ros2_bus/install/py_bus_hmi/share/py_bus_hmi/web
+symbolically linking /home/admin/ros2_bus/build/py_bus_hmi/py_bus_hmi/web/app.js -> /home/admin/ros2_bus/install/py_bus_hmi/share/py_bus_hmi/web

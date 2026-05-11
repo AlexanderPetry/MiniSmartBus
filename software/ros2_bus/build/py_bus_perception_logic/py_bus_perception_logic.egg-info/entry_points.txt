@@ -1,0 +1,2 @@
+[console_scripts]
+object_detection = py_bus_perception_logic.object_detection:main
